@@ -13,4 +13,4 @@ cd html
 $BASEDIR/vendor/bin/drush si -y stanford --db-url=mysql://root@localhost/drupal --account-name=admin --account-pass=admin
 git clone https://github.com/SU-SWS/linky_clicky.git $BASEDIR/linky_clicky
 mkdir features
-cp $BASEDIR/linky_clicky/sites/uat/features/stanford_bean_types.feature features/.
+cp $BASEDIR/linky_clicky/sites/uat/features/$TEST_FEATURE.feature features/.
