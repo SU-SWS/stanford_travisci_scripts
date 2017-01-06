@@ -4,15 +4,8 @@ imports:
   - ../../includes/extensions/mink.extension.yml
 
 default:
-  suites:
-    default:
-      contexts:
-        - FeatureContext
-        - Drupal\DrupalExtension\Context\DrupalContext
-        - Drupal\DrupalExtension\Context\MinkContext
   extensions:
     Behat\MinkExtension:
-      goutte: ~
       selenium2: ~
       base_url: http://localhost:8080
     Drupal\DrupalExtension:
@@ -20,5 +13,3 @@ default:
       api_driver: 'drupal'
       drush:
         alias: 'local'
-      drupal:
-        drupal_root: './html'
