@@ -1,10 +1,4 @@
-imports:
-  - ../../includes/config/default.yml
-  - ../../includes/extensions/drupal.extension.yml
-  - ../../includes/extensions/mink.extension.yml
-  - behat.local.yml
-
-default:
+local:
   extensions:
     Behat\MinkExtension:
       selenium2: ~

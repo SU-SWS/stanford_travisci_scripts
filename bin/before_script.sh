@@ -9,4 +9,7 @@ composer install
 mkdir sites/$TEST_FEATURE
 mv $BASEDIR/features sites/$TEST_FEATURE/.
 mv $BASEDIR/behat.yml sites/$TEST_FEATURE/.
+mv $BASEDIR/behat.local.yml sites/$TEST_FEATURE/.
+pwd
+ls sites/$TEST_FEATURE
 cp sites/uat/features/$TEST_FEATURE*.feature $BASEDIR/linky_clicky/sites/$TEST_FEATURE/features/.
