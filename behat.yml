@@ -1,3 +1,8 @@
+imports:
+  - $BASEDIR/linky_clicky/includes/config/default.yml
+  - $BASEDIR/linky_clicky/includes/extensions/drupal.extension.yml
+  - $BASEDIR/linky_clicky/includes/extensions/mink.extension.yml
+
 default:
   suites:
     default:
@@ -15,5 +20,5 @@ default:
       api_driver: 'drupal'
       drush:
         alias: 'local'
-      drupal: 
+      drupal:
         drupal_root: './html'
