@@ -12,4 +12,4 @@ default:
       blackbox: ~
       api_driver: 'drupal'
       drush:
-        alias: 'local'
+        alias: 'local.html'
