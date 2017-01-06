@@ -1,8 +1,10 @@
 #!/bin/bash
 
 # before_script
+pwd
 ls
-cd html
+cd ../
+pwd
 ls
 TEST_FEATURE=$(ls *.info | cut -f1 -d".")
 echo "$TEST_FEATURE"
