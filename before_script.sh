@@ -2,7 +2,6 @@
 
 # before_install
 composer self-update
-export BASEDIR=${PWD}
 phpenv rehash
 composer install
 
