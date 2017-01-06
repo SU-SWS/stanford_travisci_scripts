@@ -2,5 +2,7 @@
 
 # before_install
 composer self-update
-phpenv rehash
 composer install
+export PATH="$HOME/.composer/vendor/bin:$PATH"
+composer global require drush/drush:7.1.0
+phpenv rehash

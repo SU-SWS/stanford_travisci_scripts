@@ -1,16 +1,15 @@
 imports:
-  - ../../includes/config/default.yml
-  - ../../includes/extensions/drupal.extension.yml
-  - ../../includes/extensions/mink.extension.yml
-  - behat.local.yml
+  - includes/config/default.yml
+  - includes/extensions/drupal.extension.yml
+  - includes/extensions/mink.extension.yml
 
 default:
   extensions:
     Behat\MinkExtension:
-      selenium2: ~
       base_url: http://localhost:8080
+      selenium2: ~
     Drupal\DrupalExtension:
       blackbox: ~
-      api_driver: 'drupal'
+      api_driver: 'drush'
       drush:
-        alias: 'local.html'
+        alias: 'local'
