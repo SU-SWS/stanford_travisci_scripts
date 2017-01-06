@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd $BASEDIR
+cd $BASEDIR/linky_clicky
 $BASEDIR/vendor/bin/behat

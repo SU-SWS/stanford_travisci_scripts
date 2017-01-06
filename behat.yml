@@ -1,7 +1,7 @@
 imports:
-  - linky_clicky/includes/config/default.yml
-  - linky_clicky/includes/extensions/drupal.extension.yml
-  - linky_clicky/includes/extensions/mink.extension.yml
+  - includes/config/default.yml
+  - includes/extensions/drupal.extension.yml
+  - includes/extensions/mink.extension.yml
 
 default:
   suites:
