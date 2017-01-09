@@ -1,16 +1,22 @@
 #!/bin/bash
 
 # install
-export PATH="$HOME/.composer/vendor/bin:$PATH"i
 # remove preexisting site build
-rm -rf ~/html
-git clone -b travis https://github.com/SU-SWS/Stanford-Drupal-Profile.git $BASEDIR/Stanford-Drupal-Profile
-# install site in Travis home directory
-drush make -y --force-complete Stanford-Drupal-Profile/make/dept.make ~/html
-cd ~/html
-cp $BASEDIR/.htaccess .
-cp $BASEDIR/aliases.drushrc.php ~/.drush
+rm html
+git clone -b travis https://github.com/SU-SWS/Stanford-Drupal-Profile.git Stanford-Drupal-Profile
+
+# download site files in travis build directory
+drush make -y --force-complete Stanford-Drupal-Profile/make/dept.make html
+mv stanford_travisci_scripts/.htaccess html/.
+
+# pass in absolute path of travis build directory for drupal root
+mv stanford_travisci_scripts/aliases.drushrc.php ~/.drush/aliases.drushrc.php
+sed -ie "s/TEST_FEATURE/$TRAVIS_BUILD_DIR/" ~/.drush/aliases.drushrc.php
+cat ~/.drush/aliases.drushrc.php
+
+# install site with stanford self-service profile
 drush @local si -y stanford --db-url=mysql://root@localhost/drupal --account-name=admin --account-pass=admin
+
 # disable webauth module, start webserver, and start selenium webdriver
 drush @local dis -y webauth
 drush @local runserver 127.0.0.1:8080 &
