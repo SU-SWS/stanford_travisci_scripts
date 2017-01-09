@@ -1,3 +1,6 @@
+# import paths assume the includes directory will be located
+# in the $BASEDIR or stanford_travisci_scripts directory
+# and that behat tests will be run from the same directory
 imports:
   - includes/config/default.yml
   - includes/extensions/drupal.extension.yml
