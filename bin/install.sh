@@ -22,6 +22,7 @@ drush @local si -y stanford --db-url=mysql://root@localhost/drupal --account-nam
 drush @local dis -y webauth
 pwd; ls
 cd html; ls
+ls stanford_travisci_scripts/features
 drush runserver 127.0.0.1:8080 &
 cd ..
 until netstat -an 2>/dev/null | grep '8080.*LISTEN'; do sleep 0.2; done
