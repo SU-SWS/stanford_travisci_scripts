@@ -15,7 +15,20 @@ Sites are built and tests are run by scripts in the bin directory.  These script
 Installation
 ---
 
-Instructions coming soon.
+1. To add TravisCI to a repository, first create an account by logging in with GitHub at [travis-ci.org](https://travis-ci.org/).
+2. Go to your profile page at [travis-ci.org/profile](https://travis-ci.org/profile).
+3. Click on Stanford Web Services under Organizations.
+3. Find the name of your repository and click the toggle switch on.
+4. Then click the gear wheel.  This will take you to settings for this repository.
+5. Our builds rely on a custom Environment Variable.  Under Name, enter `TEST_FEATURE` and under Value, enter the name of this repository, ie. `stanford_bean_types`.
+6. Disable Build pushes, so that Travis CI will only build and run tests on pull requests.
+6. Now, in a localy copy of the repository, create a travisci-test branch.
+7. Add the .travis.default.yml file to your repository and rename it .travis.yml.
+8. Save and commit this file to your travisci-test branch.
+9. In the GitHub GUI, create a pull request to merge travisci-test.  This should trigger a site build in TravisCI.
+11. 2-6 minutes later, check back to see whether your tests succeeded.
+12. The test results should give you the option to view more details.
+13. This will take you back to travis-ci.org, where you can review the build and test logs.
 
 Assets
 ---
@@ -25,6 +38,18 @@ Assets
 **aliases.drushrc.php:** Behat uses drush aliases to run a number of test.
 
 **behat.yml:** Behat expects this file to be present and contain information about the default site url and drush alias it should use.
+
+**bin/before_install.sh:** Script that downloads required packages for building sites and running tests, such as drush, behat, selenium, etc.
+
+**bin/install.sh:** Script that builds a self-service, department site based on our [Stanford Drupal Profile](https://github.com/SU-SWS/Stanford-Drupal-Profile) make files.  It also starts the webserver and webdrivers we'll be using to run behat tests in a display-less environment.
+
+**bin/before_script.sh:** Script that downloads our test suite [Linky Clicky](https://github.com/SU-SWS/linky_clicky.git) and copies over tests for the feature we are testing.  It also starts xvfb, which we use to fake a display.
+
+**composer.json:** Contains the packages we need to build and test sites, such as drush, behat, selenium, etc.
+
+**features/:** This directory, and more importantly, the contents of features/bootstrap include the custom step definitions which we use to run our behat tests.
+
+**includes/:** As with features/bootstrap, this directory includes the minimum files we need from Linky Clicky to run behat tests.
 
 Contribution / Collaboration
 ---
