@@ -10,9 +10,8 @@ drush make -y --force-complete Stanford-Drupal-Profile/make/dept.make html
 mv stanford_travisci_scripts/.htaccess html/.
 
 # pass in absolute path of travis build directory for drupal root
-mv stanford_travisci_scripts/aliases.drushrc.php ~/.drush/aliases.drushrc.php
-sed -ie "s/TEST_FEATURE/$TRAVIS_BUILD_DIR/" ~/.drush/aliases.drushrc.php
-cat ~/.drush/aliases.drushrc.php
+mkdir ~/.drush
+sed -e "s|TEST_FEATURE|${TRAVIS_BUILD_DIR}|" stanford_travisci_scripts/aliases.drushrc.php > ~/.drush/aliases.drushrc.php
 
 # install site with stanford self-service profile
 drush @local si -y stanford --db-url=mysql://root@localhost/drupal --account-name=admin --account-pass=admin
