@@ -2,7 +2,7 @@
 
 # install
 # remove preexisting site build
-rm html
+if [ -d html ]; then rm html; fi
 git clone -b travis https://github.com/SU-SWS/Stanford-Drupal-Profile.git Stanford-Drupal-Profile
 
 # download site files in travis build directory

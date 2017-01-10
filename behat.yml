@@ -1,10 +1,10 @@
 # import paths assume the includes directory will be located
-# in the $BASEDIR or stanford_travisci_scripts directory
-# and that behat tests will be run from the same directory
+# in the travis build directory and that behat tests will be
+# run from the same directory
 imports:
-  - includes/config/default.yml
-  - includes/extensions/drupal.extension.yml
-  - includes/extensions/mink.extension.yml
+  - stanford_travisci_scripts/includes/config/default.yml
+  - stanford_travisci_scripts/includes/extensions/drupal.extension.yml
+  - stanford_travisci_scripts/includes/extensions/mink.extension.yml
 
 default:
   extensions:
