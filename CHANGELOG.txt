@@ -1,0 +1,6 @@
+Stanford TravisCI Scripts  x.x-x.x xxxx-xx-xx
+---------------------------------------------
+
+behat-7.x-1.0                      2017-01-10
+---------------------------------------------
+- Updated documentation with installation instructions.
