@@ -4,6 +4,7 @@
 # download linky_clicky and copy over related tests
 git clone https://github.com/SU-SWS/linky_clicky.git
 cp linky_clicky/includes/features/SU-SWS/$TEST_FEATURE/$TEST_FEATURE.feature stanford_travisci_scripts/features/.
+cp linky_clicky/includes/bootstrap/* stanford_travisci_scripts/features/bootstrap/
 ls stanford_travisci_scripts/features
 
 # start xvfb virtual display
