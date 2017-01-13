@@ -30,6 +30,47 @@ Installation
 12. The test results should give you the option to view more details.
 13. This will take you back to travis-ci.org, where you can review the build and test logs.
 
+Setting up a Local Copy of Travis CI
+---
+
+1. Follow the instructions under [Running a Container Based Docker Image Locally](https://docs.travis-ci.com/user/common-build-problems/#Running-a-Container-Based-Docker-Image-Locally), however use travis-php instead of travis-ruby, ie. `docker run -it quay.io/travisci/travis-php /bin/bash`.
+2. In your docker image, run (taken from http://stackoverflow.com/questions/29753560/how-to-reproduce-a-travis-ci-build-environment-for-debugging/38804734#38804734):
+```
+# Install a recent ruby (default is 1.9.3)
+rvm install 2.3.0
+rvm use 2.3.0
+
+# Install travis-build to generate a .sh out of .travis.yml
+cd builds
+git clone https://github.com/travis-ci/travis-build.git
+cd travis-build
+gem install travis
+travis # to create ~/.travis
+ln -s `pwd` ~/.travis/travis-build
+bundle install
+
+# Create project dir, assuming your project is `me/project` on GitHub
+cd ~/builds
+mkdir me
+cd me
+git clone https://github.com/SU-SWS/stanford_gallery.git
+cd project
+# Change to the branch or commit you want to investigate
+travis compile > ci.sh
+# Create variables used by scripts
+export TEST_FEATURE='stanford_gallery'
+export TRAVIS_BUILD_DIR="/home/travis/build/SU-SWS/$TEST_FEATURE"
+# Start MySQL with the following commands until this issue gets resolved: https://github.com/travis-ci/travis-ci/issues/6842
+sudo /usr/bin/mysqld_safe --skip-grant-tables &
+mysql -h localhost
+# I found I had to add a branch value to this line in ci.sh:
+# travis_cmd git\ clone\ --depth\=50\ --branch\=\'travisci-test\'\ https://github.com/SU-SWS/stanford_gallery.git\ SU-SWS/stanford_gallery --assert --echo --retry --timing
+# And remove the following lines:
+# travis_cmd phpenv\ global\ \[5.6\]\ 2\>/dev/null --echo --timing
+# travis_cmd phpenv\ global\ \[5.6\] --assert --echo --timing
+bash ci.sh
+```
+
 Assets
 ---
 
