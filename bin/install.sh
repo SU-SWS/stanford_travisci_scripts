@@ -3,7 +3,7 @@
 # install
 # remove preexisting site build
 if [ -d html ]; then rm html; fi
-git clone -b travis https://github.com/SU-SWS/Stanford-Drupal-Profile.git Stanford-Drupal-Profile
+git clone --depth 1 -b travis https://github.com/SU-SWS/Stanford-Drupal-Profile.git Stanford-Drupal-Profile
 
 # download site files in travis build directory
 drush make -y --force-complete Stanford-Drupal-Profile/make/dept.make html
