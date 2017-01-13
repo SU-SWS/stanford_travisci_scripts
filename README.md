@@ -53,17 +53,23 @@ bundle install
 cd ~/builds
 mkdir me
 cd me
-git clone https://github.com/me/project.git
+git clone https://github.com/SU-SWS/stanford_gallery.git
 cd project
-# change to the branch or commit you want to investigate
+# Change to the branch or commit you want to investigate
 travis compile > ci.sh
-# You most likely will need to edit ci.sh as it ignores matrix and env
+# Create variables used by scripts
+export TEST_FEATURE='stanford_gallery'
+export TRAVIS_BUILD_DIR="/home/travis/build/SU-SWS/$TEST_FEATURE"
+# Start MySQL with the following commands until this issue gets resolved: https://github.com/travis-ci/travis-ci/issues/6842
+sudo /usr/bin/mysqld_safe --skip-grant-tables &
+mysql -h localhost
+# I found I had to add a branch value to this line in ci.sh:
+# travis_cmd git\ clone\ --depth\=50\ --branch\=\'travisci-test\'\ https://github.com/SU-SWS/stanford_gallery.git\ SU-SWS/stanford_gallery --assert --echo --retry --timing
+# And remove the following lines:
+# travis_cmd phpenv\ global\ \[5.6\]\ 2\>/dev/null --echo --timing
+# travis_cmd phpenv\ global\ \[5.6\] --assert --echo --timing
 bash ci.sh
 ```
-I found that I had to add a branch value to this line:
-`travis_cmd git\ clone\ --depth\=50\ --branch\=\'travisci-test\'\ https://github.com/SU-SWS/stanford_gallery.git\ SU-SWS/stanford_gallery --assert --echo --retry --timing`
-
-And remove lines related to phpenv, in order for the compiled script to run .travis.yml.
 
 Assets
 ---
