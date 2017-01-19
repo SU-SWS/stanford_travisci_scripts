@@ -1,6 +1,8 @@
 # The stanford_travisci_scripts repository contains external scripts
 # used here to configure server and build a self-service site.
 # https://github.com/SU-SWS/stanford_travisci_scripts
+# This .travis.yml file assumes all scripts will be run from
+# $TRAVIS_BUILD_DIR, ie. /home/travis/build/SU-SWS/$TEST_FEATURE
 
 language: php
 php:
@@ -14,20 +16,20 @@ mysql:
 before_install:
   # download external repository with Stanford Travis CI scripts
   - git clone https://github.com/SU-SWS/stanford_travisci_scripts.git
-  # make sure to run all scripts from /home/travis/build/SU-SWS/$TEST_FEATURE/stanford_travisci_scripts
-  - cd $TRAVIS_BUILD_DIR/stanford_travisci_scripts
-  - chmod +x bin/*.sh
+  - chmod +x stanford_travisci_scripts/bin/*.sh
   # install composer packages
-  - bin/before_install.sh
+  - stanford_travisci_scripts/bin/before_install.sh
 
 install:
   # install self-service site, disable webauth module, start webserver and selenium webdriver
-  - bin/install.sh
+  - stanford_travisci_scripts/bin/install.sh
 
 before_script:
   # download linky_clicky, grab related tests, and start xvfb virtual display
-  - bin/before_script.sh
+  - stanford_travisci_scripts/bin/before_script.sh
 
 script:
   # make sure shell can find drush and run behat tests here, so Travis CI reports accurate results
-  - bin/behat
+  - export PATH="$HOME/.composer/vendor/bin:$PATH"
+  - cd stanford_travisci_scripts
+  - bin/behat -p default -s all -f pretty features
