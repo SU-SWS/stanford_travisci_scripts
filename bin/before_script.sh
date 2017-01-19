@@ -28,15 +28,15 @@ kill $(lsof -ti tcp:4444)
 # kill processes on port used by php runserver
 kill $(lsof -t -i:8080)
 
-# start php runserver from within site directory
+# start php runserver silently and from within site directory
 # alias failed to find webroot
 cd html
-drush runserver 127.0.0.1:8080 &
+drush runserver 127.0.0.1:8080 &>/dev/null &
 # wait until server is up and running before proceeding
 until netstat -an 2>/dev/null | grep '8080.*LISTEN'; do true; done
 cd ..
 
-# download recommended version of selenium-server, start and background process
+# download recommended version of selenium-server, start, silence, and background process
 wget http://selenium-release.storage.googleapis.com/2.47/selenium-server-standalone-2.47.1.jar
 java -jar selenium-server-standalone-2.47.1.jar -p 4444 &>/dev/null &
 
