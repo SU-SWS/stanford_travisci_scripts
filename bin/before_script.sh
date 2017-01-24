@@ -22,12 +22,6 @@ sleep 3
 # install net-tools
 sudo apt-get install -y net-tools
 
-# kill persistent proccesses from previous builds
-# kill processes on port used by selenium-server
-kill $(lsof -ti tcp:4444)
-# kill processes on port used by php runserver
-kill $(lsof -t -i:8080)
-
 # start php runserver silently and from within site directory
 # alias failed to find webroot
 cd html

@@ -8,7 +8,8 @@ git clone --depth 1 -b travis https://github.com/SU-SWS/Stanford-Drupal-Profile.
 drush make -y --force-complete Stanford-Drupal-Profile/make/dept.make html
 
 # install site with stanford self-service profile
-cp stanford_travisci_scripts/aliases.drushrc.php ~/.
+cp stanford_travisci_scripts/aliases.drushrc.php ~/.drush/.
+cat ~/.drush/aliases.drushrc.php
 drush @local si -y stanford --db-url=mysql://root@localhost/drupal --account-name=admin --account-pass=admin
 sed -ie "s|# RewriteBase /|RewriteBase /|" html/.htaccess
 
