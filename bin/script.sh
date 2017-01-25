@@ -2,7 +2,7 @@
 
 # script
 export PATH="$HOME/.composer/vendor/bin:$PATH"
-cd stanford_travisci_scripts
+cd $HOME/stanford_travisci_scripts
 
 # collect the list of feature files to run
 BEHAT_TESTS=$(find features -name "*.feature" -type f -printf '%f\n')
