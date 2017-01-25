@@ -2,7 +2,7 @@
 # used here to configure server and build a self-service site.
 # https://github.com/SU-SWS/stanford_travisci_scripts
 # This .travis.yml file assumes all scripts will be run from
-# $TRAVIS_BUILD_DIR, ie. /home/travis/build/SU-SWS/$TEST_FEATURE
+# $TRAVIS_BUILD_DIR, ie. /home/travis/build/SU-SWS/$REPOSITORY_NAME
 
 language: php
 php:

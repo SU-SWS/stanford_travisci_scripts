@@ -20,7 +20,7 @@ function evaluate_test_result {
 # run through each test, one at a time
 # (1) output results to shell and (2) save as variable, ie. 1>&2
 for TEST in ${BEHAT_TESTS[@]}; do
-  TEST_RESULT=$(timeout 3m bin/behat -p default -s all -f pretty features/$TEST_FEATURE/$TEST 1>&2)
+  TEST_RESULT=$(timeout 3m bin/behat -p default -s all -f pretty features/$REPOSITORY_NAME/$TEST 1>&2)
   evaluate_test_result
 done
 

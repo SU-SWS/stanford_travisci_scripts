@@ -20,7 +20,7 @@ Installation
 3. Click on Stanford Web Services under Organizations.
 3. Find the name of your repository and click the toggle switch on.
 4. Then click the gear wheel.  This will take you to settings for this repository.
-5. Our builds rely on a custom Environment Variable.  Under Name, enter `TEST_FEATURE` and under Value, enter the name of this repository, ie. `stanford_bean_types`.
+5. Our builds rely on a custom Environment Variable.  Under Name, enter `REPOSITORY_NAME` and under Value, enter the name of this repository, ie. `stanford_bean_types`.
 6. Disable Build pushes, so that Travis CI will only build and run tests on pull requests.
 6. Now, in a localy copy of the repository, create a travisci-test branch.
 7. Add the .travis.default.yml file to your repository and rename it .travis.yml.
@@ -58,8 +58,8 @@ cd project
 # Change to the branch or commit you want to investigate
 travis compile > ci.sh
 # Create variables used by scripts
-export TEST_FEATURE='stanford_gallery'
-export TRAVIS_BUILD_DIR="/home/travis/build/SU-SWS/$TEST_FEATURE"
+export REPOSITORY_NAME='stanford_gallery'
+export TRAVIS_BUILD_DIR="/home/travis/build/SU-SWS/$REPOSITORY_NAME"
 # Start MySQL with the following commands until this issue gets resolved: https://github.com/travis-ci/travis-ci/issues/6842
 sudo /usr/bin/mysqld_safe --skip-grant-tables &
 mysql -h localhost
