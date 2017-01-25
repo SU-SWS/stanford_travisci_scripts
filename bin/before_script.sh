@@ -6,7 +6,13 @@ export PATH="$HOME/.composer/vendor/bin:$PATH"
 git clone --depth 1 https://github.com/SU-SWS/linky_clicky.git
 mkdir -p stanford_travisci_scripts/includes/config
 mkdir stanford_travisci_scripts/includes/extensions
-cp -r linky_clicky/includes/features/SU-SWS/$REPOSITORY_NAME stanford_travisci_scripts/features/.
+
+# copy over feature tests unless profile testing, in which case, copy over uat tests
+if [[ $REPOSITORY_NAME == "Stanford-Drupal-Profile" ]] || [[ $REPOSITORY_NAME == "stanford-jumpstart-deployer"]];then
+  cp -r linky_clicky/sites/uat/features stanford_travisci_scripts/features/$RESPOSITORY_NAME
+else
+  cp -r linky_clicky/includes/features/SU-SWS/$REPOSITORY_NAME stanford_travisci_scripts/features/.
+fi
 cp linky_clicky/includes/bootstrap/* stanford_travisci_scripts/features/bootstrap/.
 cp linky_clicky/includes/config/default.yml stanford_travisci_scripts/includes/config/.
 cp linky_clicky/includes/extensions/drupal.extension.yml stanford_travisci_scripts/includes/extensions/.
