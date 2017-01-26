@@ -10,6 +10,12 @@ php:
 
 sudo: required
 
+cache:
+  directories:
+    - $HOME/.cache
+    - $HOME/.composer/cache
+    - $HOME/.drush/cache
+
 mysql:
   database: drupal
   username: root
@@ -18,18 +24,18 @@ mysql:
 before_install:
   # download external repository with Stanford Travis CI scripts
   - git clone https://github.com/SU-SWS/stanford_travisci_scripts.git
-  - chmod +x stanford_travisci_scripts/bin/*.sh
+  - chmod +x $HOME/stanford_travisci_scripts/bin/*.sh
   # install composer packages
-  - stanford_travisci_scripts/bin/before_install.sh
+  - $HOME/stanford_travisci_scripts/bin/before_install.sh
 
 install:
   # install self-service site, disable webauth module, start webserver and selenium webdriver
-  - stanford_travisci_scripts/bin/install.sh
+  - $HOME/stanford_travisci_scripts/bin/install.sh
 
 before_script:
   # download linky_clicky, grab related tests, and start xvfb virtual display
-  - stanford_travisci_scripts/bin/before_script.sh
+  - $HOME/stanford_travisci_scripts/bin/before_script.sh
 
 script:
   # make sure shell can find drush and run behat tests here, so Travis CI reports accurate results
-  - stanford_travisci_scripts/bin/script.sh
+  - $HOME/stanford_travisci_scripts/bin/script.sh
