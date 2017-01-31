@@ -2,11 +2,11 @@
 
 # install
 export PATH="$HOME/.composer/vendor/bin:$PATH"
-sed "s|ACCESS_TOKEN|$ACCESS_TOKEN|" stanford_travisci_scripts/.netrc > $HOME/.netrc
+sed "s|ACCESS_TOKEN|$ACCESS_TOKEN|" $HOME/stanford_travisci_scripts/.netrc > $HOME/.netrc
 
 # save drush alias and update .htaccess file to allow rewriting
 if [ ! -d $HOME/.drush ]; then mkdir $HOME/.drush; fi
-cp stanford_travisci_scripts/aliases.drushrc.php $HOME/.drush/aliases.drushrc.php
+cp $HOME/stanford_travisci_scripts/aliases.drushrc.php $HOME/.drush/aliases.drushrc.php
 sed -ie "s|TRAVIS_BUILD_DIR|$TRAVIS_BUILD_DIR|" $HOME/.drush/aliases.drushrc.php
 cat $HOME/.drush/aliases.drushrc.php
 
