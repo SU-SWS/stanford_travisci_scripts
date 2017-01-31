@@ -13,10 +13,10 @@ if [[ "$REPOSITORY_NAME" == "Stanford-Drupal-Profile" || "$REPOSITORY_NAME" == "
 else
   cp -r $HOME/linky_clicky/includes/features/SU-SWS/$REPOSITORY_NAME $HOME/stanford_travisci_scripts/features/.
 fi
-cp $HOME/linky_clicky/includes/bootstrap/* stanford_travisci_scripts/features/bootstrap/.
-cp $HOME/linky_clicky/includes/config/default.yml stanford_travisci_scripts/includes/config/.
-cp $HOME/linky_clicky/includes/extensions/drupal.extension.yml stanford_travisci_scripts/includes/extensions/.
-cp $HOME/linky_clicky/includes/extensions/mink.extension.yml stanford_travisci_scripts/includes/extensions/.
+cp $HOME/linky_clicky/includes/bootstrap/* $HOME/stanford_travisci_scripts/features/bootstrap/.
+cp $HOME/linky_clicky/includes/config/default.yml $HOME/stanford_travisci_scripts/includes/config/.
+cp $HOME/linky_clicky/includes/extensions/drupal.extension.yml $HOME/stanford_travisci_scripts/includes/extensions/.
+cp $HOME/linky_clicky/includes/extensions/mink.extension.yml $HOME/stanford_travisci_scripts/includes/extensions/.
 
 # start xvfb virtual display
 export DISPLAY=:99.0
