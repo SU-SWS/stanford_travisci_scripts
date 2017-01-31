@@ -28,6 +28,10 @@ sleep 3
 # install net-tools
 sudo apt-get install -y net-tools
 
+# kill any processes on ports from previously canceled builds
+kill $(lsof -ti tcp:4444)
+kill $(lsof -t -i:8080)
+
 # start php runserver silently and from within site directory
 # alias failed to find webroot
 cd $TRAVIS_BUILD_DIR/html
