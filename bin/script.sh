@@ -37,6 +37,9 @@ done
 
 echo "Number of failed tests: $FAILURES_COUNT"
 
+# remove behat tests for repository from cache
+rm -rf $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
+
 # fail script.sh if behat returned at least one failure
 if [ FAILURES_COUNT > 0 ]; then
   exit 1
