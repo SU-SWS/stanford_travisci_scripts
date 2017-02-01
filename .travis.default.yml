@@ -1,14 +1,10 @@
 # The stanford_travisci_scripts repository contains external scripts
 # used here to configure server and build a self-service site.
 # https://github.com/SU-SWS/stanford_travisci_scripts
-# This .travis.yml file assumes all scripts will be run from
-# $TRAVIS_BUILD_DIR, ie. /home/travis/build/SU-SWS/$REPOSITORY_NAME
 
 language: php
 php:
-  - '5.4'
   - '5.6'
-  - '7.1'
 
 sudo: required
 
@@ -28,7 +24,7 @@ mysql:
 
 before_install:
   # download external repository with Stanford Travis CI scripts
-  - if [ ! -d $HOME/stanford_travisci_scripts ]; then git clone https://github.com/SU-SWS/stanford_travisci_scripts.git $HOME/stanford_travisci_scripts; fi
+  - if [ -z "$(ls -A $HOME/stanford_travisci_scripts)" ]; then git clone https://github.com/SU-SWS/stanford_travisci_scripts.git $HOME/stanford_travisci_scripts; fi
   - chmod +x $HOME/stanford_travisci_scripts/bin/*.sh
   # install composer packages
   - $HOME/stanford_travisci_scripts/bin/before_install.sh
