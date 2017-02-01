@@ -11,10 +11,11 @@ FAILURES_COUNT=0
 
 # re-assign value for profile variable
 PROFILE_NAME=$(find $TRAVIS_BUILD_DIR/html/profiles -name "*jumpstart*" -type d -printf '%f\n')
+if [ -z "$PROFILE_NAME" ]; then PROFILE_NAME="stanford"; fi
 
 # reinstall site once after first behat test failure
 function reinstall_rerun_on_first_failure {
-  drush @local si $PROFILE_NAME -y
+  drush @local si $PROFILE_NAME -y >/dev/null
   TEST_RESULT=$(timeout 3m bin/behat -p default -s all -f pretty features/$REPOSITORY_NAME/$TEST)
   if [[ $TEST_RESULT == *"Failed"* ]] || [[ $TEST_RESULT == *"Terminated"* ]]; then
     ((FAILURES_COUNT++))
