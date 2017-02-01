@@ -6,7 +6,9 @@
 
 language: php
 php:
-  - 5.6
+  - '5.4'
+  - '5.6'
+  - '7.1'
 
 sudo: required
 
@@ -23,7 +25,7 @@ mysql:
 
 before_install:
   # download external repository with Stanford Travis CI scripts
-  - git clone https://github.com/SU-SWS/stanford_travisci_scripts.git
+  - git clone https://github.com/SU-SWS/stanford_travisci_scripts.git $HOME/stanford_travisci_scripts
   - chmod +x $HOME/stanford_travisci_scripts/bin/*.sh
   # install composer packages
   - $HOME/stanford_travisci_scripts/bin/before_install.sh
