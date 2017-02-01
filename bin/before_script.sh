@@ -3,7 +3,7 @@
 # before_script
 export PATH="$HOME/.composer/vendor/bin:$PATH"
 # download linky_clicky and copy over related tests and required files
-git clone --depth 1 https://github.com/SU-SWS/linky_clicky.git $HOME/linky_clicky
+if [ ! -d $HOME/linky_clicky ]; then git clone --depth 1 https://github.com/SU-SWS/linky_clicky.git $HOME/linky_clicky; fi
 mkdir -p $HOME/stanford_travisci_scripts/includes/config
 mkdir $HOME/stanford_travisci_scripts/includes/extensions
 ls $HOME/stanford_travisci_scripts/features

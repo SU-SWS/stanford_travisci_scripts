@@ -11,6 +11,7 @@ FAILURES_COUNT=0
 
 # reinstall site once after first behat test failure
 function reinstall_rerun_on_first_failure {
+  echo "PROFILE: $PROFILE_NAME"
   drush @local si $PROFILE_NAME -y
   TEST_RESULT=$(timeout 3m bin/behat -p default -s all -f pretty features/$REPOSITORY_NAME/$TEST)
   if [[ $TEST_RESULT == *"Failed"* ]] || [[ $TEST_RESULT == *"Terminated"* ]]; then
