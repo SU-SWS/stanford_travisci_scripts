@@ -12,9 +12,10 @@ FAILURES_COUNT=0
 # reinstall site once after first behat test failure
 function reinstall_rerun_on_first_failure {
   drush @local si $PROFILE_NAME -y
-  TEST_RESULT=$(timeout 3m bin/behat -p default -s all -f pretty features/$REPOSITORY_NAME/$TEST 1>&2)
+  TEST_RESULT=$(timeout 3m bin/behat -p default -s all -f pretty features/$REPOSITORY_NAME/$TEST)
   if [[ $TEST_RESULT == *"Failed"* ]] || [[ $TEST_RESULT == *"Terminated"* ]]; then
     ((FAILURES_COUNT++))
+    timeout 3m bin/behat -p default -s all -f pretty features/$REPOSITORY_NAME/$TEST
   fi
 }
 
@@ -29,11 +30,11 @@ function evaluate_first_test_result {
 # run through each test, one at a time
 # (1) output results to shell and (2) save as variable, ie. 1>&2
 for TEST in ${BEHAT_TESTS[@]}; do
-  TEST_RESULT=$(timeout 3m bin/behat -p default -s all -f pretty features/$REPOSITORY_NAME/$TEST 1>&2)
+  TEST_RESULT=$(timeout 3m bin/behat -p default -s all -f pretty features/$REPOSITORY_NAME/$TEST)
   evaluate_first_test_result
 done
 
-echo $FAILURES_COUNT
+echo "Number of failed tests: $FAILURES_COUNT"
 
 # fail script.sh if behat returned at least one failure
 if [ FAILURES_COUNT > 0 ]; then
