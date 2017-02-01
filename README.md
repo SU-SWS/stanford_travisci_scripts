@@ -21,14 +21,16 @@ Installation
 3. Find the name of your repository and click the toggle switch on.
 4. Then click the gear wheel.  This will take you to settings for this repository.
 5. Our builds rely on a custom Environment Variable.  Under Name, enter `REPOSITORY_NAME` and under Value, enter the name of this repository, ie. `stanford_bean_types`.
-6. Disable Build pushes, so that Travis CI will only build and run tests on pull requests.
-6. Now, in a localy copy of the repository, create a travisci-test branch.
-7. Add the .travis.default.yml file to your repository and rename it .travis.yml.
-8. Save and commit this file to your travisci-test branch.
-9. In the GitHub GUI, create a pull request to merge travisci-test.  This should trigger a site build in TravisCI.
-11. 2-6 minutes later, check back to see whether your tests succeeded.
-12. The test results should give you the option to view more details.
-13. This will take you back to travis-ci.org, where you can review the build and test logs.
+6. Travis builds self-service sites by default.  If you would like to build a different SWS product, add a value for the variable `PRODUCT_NAME`, ie. `jumpstart-academic`.
+7. Building any jumpstart product will require the additional variable, `ACCESS_TOKEN`.  Make sure that the toggle `Display value in build log` is set to off before adding this value.
+8. Disable Build pushes, so that Travis CI will only build and run tests on pull requests.
+9. Now, in a localy copy of the repository, create a travisci-test branch.
+10. Add the .travis.default.yml file to your repository and rename it .travis.yml.
+11. Save and commit this file to your travisci-test branch.
+12. In the GitHub GUI, create a pull request to merge travisci-test.  This should trigger a site build in TravisCI.
+13. 2-6 minutes later, check back to see whether your tests succeeded.
+14. The test results should give you the option to view more details.
+15. This will take you back to travis-ci.org, where you can review the build and test logs.
 
 Setting up a Local Copy of Travis CI
 ---

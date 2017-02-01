@@ -10,13 +10,14 @@ cp $HOME/stanford_travisci_scripts/aliases.drushrc.php $HOME/.drush/aliases.drus
 sed -ie "s|TRAVIS_BUILD_DIR|$TRAVIS_BUILD_DIR|" $HOME/.drush/aliases.drushrc.php
 cat $HOME/.drush/aliases.drushrc.php
 
-if [ "$REPOSITORY_NAME" = "stanford-jumpstart-deployer" ]; then
-  drush make -y --force-complete production/product/jumpstart-academic/jumpstart-academic.make html
-  drush @local si -y stanford_sites_jumpstart_academic --db-url=mysql://root@localhost/drupal --account-name=admin --account-pass=admin
-else
+if [ -z "$PRODUCT_NAME" ]; then
   git clone --depth 1 -b travis https://github.com/SU-SWS/Stanford-Drupal-Profile.git
   drush make -y --force-complete Stanford-Drupal-Profile/make/dept.make html
   drush @local si -y stanford --db-url=mysql://root@localhost/drupal --account-name=admin --account-pass=admin
+else
+  drush make -y --force-complete production/product/$PRODUCT_NAME/$PRODUCT_NAME.make html
+  PROFILE_NAME=$(find $TRAVIS_BUILD_DIR/html/profiles -name "*jumpstart*" -type d -printf '%f\n')
+  drush @local si -y $PROFILE_NAME --db-url=mysql://root@localhost/drupal --account-name=admin --account-pass=admin
 fi
 
 # disable webauth module and uncomment RewriteBase
