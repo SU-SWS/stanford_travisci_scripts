@@ -9,9 +9,11 @@ BEHAT_TESTS=$(find features -name "*.feature" -type f -printf '%f\n')
 echo "$BEHAT_TESTS"
 FAILURES_COUNT=0
 
+# re-assign value for profile variable
+PROFILE_NAME=$(find $TRAVIS_BUILD_DIR/html/profiles -name "*jumpstart*" -type d -printf '%f\n')
+
 # reinstall site once after first behat test failure
 function reinstall_rerun_on_first_failure {
-  echo "PROFILE: $PROFILE_NAME"
   drush @local si $PROFILE_NAME -y
   TEST_RESULT=$(timeout 3m bin/behat -p default -s all -f pretty features/$REPOSITORY_NAME/$TEST)
   if [[ $TEST_RESULT == *"Failed"* ]] || [[ $TEST_RESULT == *"Terminated"* ]]; then

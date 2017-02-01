@@ -12,12 +12,12 @@ cat $HOME/.drush/aliases.drushrc.php
 
 if [ -z "$PRODUCT_NAME" ]; then
   if [ ! -d $HOME/Stanford-Drupal-Profile ]; then git clone --depth 1 https://github.com/SU-SWS/Stanford-Drupal-Profile.git $HOME/Stanford-Drupal-Profile; fi
-  grep -rl 'git@github.com:' $HOME/Stanford-Drupal-Profile | xargs sed -i '' 's|git@github.com:|https://github.com/|'
+  grep -rl 'git@github.com:' $HOME/Stanford-Drupal-Profile | xargs sed -i 's|git@github.com:|https://github.com/|'
   drush make -y --force-complete $HOME/Stanford-Drupal-Profile/make/dept.make html
   drush @local si -y stanford --db-url=mysql://root@localhost/drupal --account-name=admin --account-pass=admin
 else
   if [ ! -d $HOME/stanford-jumpstart-deployer ]; then git clone --depth 1 -b proboci https://github.com/SU-SWS/stanford-jumpstart-deployer.git $HOME/stanford-jumpstart-deployer; fi
-  grep -rl 'git@github.com:' $HOME/stanford-jumpstart-deployer | xargs sed -i '' 's|git@github.com:|https://github.com/|'
+  grep -rl 'git@github.com:' $HOME/stanford-jumpstart-deployer | xargs sed -i 's|git@github.com:|https://github.com/|'
   drush make -y --force-complete $HOME/stanford-jumpstart-deployer/production/product/$PRODUCT_NAME/$PRODUCT_NAME.make html
   export PROFILE_NAME=$(find $TRAVIS_BUILD_DIR/html/profiles -name "*jumpstart*" -type d -printf '%f\n')
   drush @local si -y $PROFILE_NAME --db-url=mysql://root@localhost/drupal --account-name=admin --account-pass=admin
