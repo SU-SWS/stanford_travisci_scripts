@@ -30,6 +30,11 @@ drush @local dis -y "$DISABLE_MODULES"
 
 # find submodules and enable additional modules required for testing
 SUBMODULES=$(find $TRAVIS_BUILD_DIR/html/sites/all/modules/*/$REPOSITORY_NAME/modules -mindepth 1 -maxdepth 1 -type d -printf '%f\n')
-drush @local dl "$ENABLE_MODULES"
-drush @local en -y "$ENABLE_MODULES $SUBMODULES"
+# Download stanford modules
+for MODULE_NAME in $ENABLE_MODULES; do
+  if [[ "$MODULE_NAME" == "stanford"* ]]; then
+    git clone https://github.com/SU-SWS/$MODULE_NAME.git $TRAVIS_BUILD_DIR/html/sites/all/modules/stanford/$MODULE_NAME
+  fi
+done
+drush @local en -y $ENABLE_MODULES $SUBMODULES
 sed -ie "s|# RewriteBase /|RewriteBase /|" $TRAVIS_BUILD_DIR/html/.htaccess
