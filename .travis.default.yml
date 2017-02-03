@@ -33,9 +33,6 @@ cache:
     - $HOME/.cache
     - $HOME/.composer/cache
     - $HOME/.drush/cache
-    - $HOME/stanford_travisci_scripts
-    - $HOME/Stanford-Drupal-Profile
-    - $HOME/stanford-jumpstart-deployer
 
 mysql:
   database: drupal
@@ -44,8 +41,8 @@ mysql:
 
 before_install:
   # download external repository with Stanford Travis CI scripts
-  - if [ -z "$(ls -A $HOME/stanford_travisci_scripts)" ]; then git clone https://github.com/SU-SWS/stanford_travisci_scripts.git $HOME/stanford_travisci_scripts; fi
-  - cd $HOME/stanford_travisci_scripts; git checkout $SCRIPTS_BRANCH; git -C pull; cd $HOME
+  - if [ ! -z $SCRIPTS_BRANCH ]; then SCRIPTS_BRANCH="-b $SCRIPTS_BRANCH"; fi
+  - git clone $SCRIPTS_BRANCH https://github.com/SU-SWS/stanford_travisci_scripts.git $HOME/stanford_travisci_scripts
   - chmod +x $HOME/stanford_travisci_scripts/bin/*.sh
   # install composer packages
   - $HOME/stanford_travisci_scripts/bin/before_install.sh
