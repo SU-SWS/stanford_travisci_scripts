@@ -25,7 +25,7 @@ else
   drush @local si -y $PROFILE_NAME --db-url=mysql://root@localhost/drupal --account-name=admin --account-pass=admin
 fi
 
-# disable webauth module and uncomment RewriteBase
+# disable modules based on testing requirements
 drush @local dis -y "$DISABLE_MODULES"
 
 # find submodules and enable additional modules required for testing
