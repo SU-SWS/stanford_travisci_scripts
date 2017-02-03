@@ -47,7 +47,7 @@ git clone https://github.com/travis-ci/travis-build.git
 cd travis-build
 gem install travis
 travis # to create ~/.travis
-ln -s `pwd` ~/.travis/travis-build
+ln -s ~/builds/travis-build ~/.travis/travis-build
 bundle install
 
 # Create project dir, assuming your project is `me/project` on GitHub
