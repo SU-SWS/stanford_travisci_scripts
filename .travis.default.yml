@@ -15,7 +15,7 @@
 # - jumpstart-academic
 # - jumpstart-engineering
 #
-# ENABLE_MODUES:
+# ENABLE_MODULES:
 # Enter as a space separated string, modules and submodules that you
 # would like to enable after the installation profile has run. Useful
 # for adding additional items.
@@ -44,7 +44,7 @@
 # SCRIPTS_BRANCH:
 # Leave blank to use the default stanford_travisci_scripts branch.
 # Example:
-# testing
+# HSDO-709-landing-page
 
 env:
   global:
