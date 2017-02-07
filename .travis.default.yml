@@ -2,12 +2,12 @@
 # used here to configure server and build a self-service site.
 # https://github.com/SU-SWS/stanford_travisci_scripts
 
-# REPOSITORY_NAME:
-# Enter the name of this repository, ie. stanford_bean_types
-#
 # PRODUCT_NAME:
-# Leave blank to install a self-service site
+# Leave blank to install a self-service site.
 # Or enter the product you would like to build.
+# If installing a product, you will need add the Environment Variable
+# ACCESS_TOKEN, to the settings for this repository at travis-ci.org.
+# The toggle "Display value in build log" should be off before clicking Add.
 # Options include
 # - jumpstart
 # - jumpstart-plus
@@ -16,9 +16,10 @@
 # - jumpstart-engineering
 #
 # ENABLE_MODUES:
-# Enter as a space separated string, modules that you would like to enable after
-# the installation profile has run. Useful for adding additional items.
-# Example: 
+# Enter as a space separated string, modules and submodules that you
+# would like to enable after the installation profile has run. Useful
+# for adding additional items.
+# Example:
 # stanford_gallery nobots
 #
 # DISABLE_MODULES:
@@ -36,7 +37,7 @@
 # Leave blank to use the default Stanford-Drupal-Profile branch.
 #
 # CLICKY_BRANCH:
-# Leave blank to use the default linky_clicky branch. 
+# Leave blank to use the default linky_clicky branch.
 # Example:
 # 4.x
 #
@@ -47,7 +48,6 @@
 
 env:
   global:
-    - REPOSITORY_NAME=""
     - PRODUCT_NAME=""
     - ENABLE_MODULES=""
     - DISABLE_MODULES="webauth"

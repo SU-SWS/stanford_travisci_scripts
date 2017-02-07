@@ -2,6 +2,7 @@
 
 # script
 export PATH="$HOME/.composer/vendor/bin:$PATH"
+export REPOSITORY_NAME=$(find $TRAVIS_BUILD_URL -mindepth 1 -maxdepth 1 -name "*.info" -type f -printf '%f\n' | cut -f1 -d".")
 cd $HOME/stanford_travisci_scripts
 
 # collect the list of feature files to run

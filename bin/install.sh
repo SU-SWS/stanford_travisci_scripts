@@ -24,17 +24,21 @@ else
   export PROFILE_NAME=$(find $TRAVIS_BUILD_DIR/html/profiles -name "*jumpstart*" -type d -printf '%f\n')
   drush @local si -y $PROFILE_NAME --db-url=mysql://root@localhost/drupal --account-name=admin --account-pass=admin
 fi
+sed -ie "s|# RewriteBase /|RewriteBase /|" $TRAVIS_BUILD_DIR/html/.htaccess
 
-# disable modules based on testing requirements
-drush @local dis -y "$DISABLE_MODULES"
+# Disable modules based on testing requirements.
+if [ ! -z "$DISABLE_MODULES" ]; then
+  drush @local dis -y "$DISABLE_MODULES"
+fi
 
-# find submodules and enable additional modules required for testing
-SUBMODULES=$(find $TRAVIS_BUILD_DIR/html/sites/all/modules/*/$REPOSITORY_NAME/modules -mindepth 1 -maxdepth 1 -type d -printf '%f\n')
-# Download stanford modules
+# Download stanford modules if not already present in sites/all/stanford.
 for MODULE_NAME in $ENABLE_MODULES; do
-  if [[ "$MODULE_NAME" == "stanford"* ]]; then
+  if [[ "$MODULE_NAME" == "stanford"* ]] && [ ! -d $TRAVIS_BUILD_DIR/html/sites/all/modules/stanford/$MODULE_NAME ]; then
     git clone https://github.com/SU-SWS/$MODULE_NAME.git $TRAVIS_BUILD_DIR/html/sites/all/modules/stanford/$MODULE_NAME
   fi
 done
-drush @local en -y $ENABLE_MODULES $SUBMODULES
-sed -ie "s|# RewriteBase /|RewriteBase /|" $TRAVIS_BUILD_DIR/html/.htaccess
+
+# Enable modules and submodules if specified.
+if [ ! -z "$ENABLE_MODULES" ]; then
+  drush @local en -y $ENABLE_MODULES
+fi
