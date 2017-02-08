@@ -42,3 +42,7 @@ done
 if [ ! -z "$ENABLE_MODULES" ]; then
   drush @local en -y $ENABLE_MODULES
 fi
+
+# Ensure that all features are in the state that they should be.
+drush @local en -y "features"
+drush @local fra -y
