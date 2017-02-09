@@ -9,9 +9,14 @@ imports:
 default:
   extensions:
     Behat\MinkExtension:
-      base_url: http://127.0.0.1:8080
+      goutte: ~
+      default_sessions: selenium2
+      javascript_session: selenium2
+      browser_name: firefox
       selenium2:
         browser: firefox
+      base_url: http://127.0.0.1:8080
+      files_path: "."
     Drupal\DrupalExtension:
       blackbox: ~
       api_driver: 'drush'

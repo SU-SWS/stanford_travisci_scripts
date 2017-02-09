@@ -77,8 +77,6 @@ bash ci.sh
 Assets
 ---
 
-**.htaccess:** This is a copy of Drupal's 7.50 .htaccess file with RewriteBase / uncommented.
-
 **aliases.drushrc.php:** Behat uses drush aliases to run a number of test.
 
 **behat.yml:** Behat expects this file to be present and contain information about the default site url and drush alias it should use.
@@ -92,8 +90,6 @@ Assets
 **composer.json:** Contains the packages we need to build and test sites, such as drush, behat, selenium, etc.
 
 **features/:** This directory, and more importantly, the contents of features/bootstrap include the custom step definitions which we use to run our behat tests.
-
-**includes/:** As with features/bootstrap, this directory includes the minimum files we need from Linky Clicky to run behat tests.
 
 Contribution / Collaboration
 ---
