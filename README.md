@@ -62,7 +62,7 @@ travis compile > ci.sh
 export REPOSITORY_NAME='stanford_gallery'
 export PRODUCT_NAME='jumpstart-academic'
 export ACCESS_TOKEN='[TOKEN]'
-export TRAVIS_BUILD_DIR="/home/travis/build/SU-SWS/$REPOSITORY_NAME"
+export TRAVIS_BUILD_DIR="/home/travis/builds/SU-SWS/$REPOSITORY_NAME"
 # Start MySQL with the following commands until this issue gets resolved: https://github.com/travis-ci/travis-ci/issues/6842
 sudo /usr/bin/mysqld_safe --skip-grant-tables &
 mysql -h localhost
