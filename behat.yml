@@ -21,3 +21,14 @@ default:
       api_driver: 'drush'
       drush:
         alias: 'local'
+    emuse\BehatHTMLFormatter\BehatHTMLFormatterExtension:
+      name: html
+      renderer: Twig,Behat2
+      file_name: index
+      print_args: true
+      print_outp: true
+      loop_break: true
+  formatters:
+    pretty: true
+    html:
+      output_path: 'behat_results'
