@@ -2,25 +2,12 @@
 
 # script
 export PATH="$HOME/.composer/vendor/bin:$PATH"
-export REPOSITORY_NAME=$(find $TRAVIS_BUILD_URL -mindepth 1 -maxdepth 1 -name "*.info" -type f -printf '%f\n' | cut -f1 -d".")
-cd $HOME/stanford_travisci_scripts
 
-# collect the list of feature files to run
-BEHAT_TESTS=$(find features -name "*.feature" -type f -printf '%f\n')
-echo "$BEHAT_TESTS"
-FAILURES_COUNT=0
+# run through all tests in features directory
+timeout 3m bin/behat -p default -s dev features
 
-# run through each test, one at a time
-for TEST in ${BEHAT_TESTS[@]}; do
-  timeout 3m bin/behat -p default -s dev -f pretty features/$REPOSITORY_NAME/$TEST
-  # TEST_RESULT=$(timeout 3m bin/behat -p default -s dev -f pretty features/$REPOSITORY_NAME/$TEST)
-  # if [[ $TEST_RESULT == *"Failed"* ]] || [[ $TEST_RESULT == *"Terminated"* ]]; then
-    # ((FAILURES_COUNT++))
-    # drush @local si -y stanford
-    # timeout 3m bin/behat -p default -s dev -f pretty features/$REPOSITORY_NAME/$TEST
-  # fi
-done
-
+# grap the number of failures from behat's html output summary report
+FAILURES_COUNT=$(cat behat_results/index.html | grep 'scenarios failed of' | sed -r 's/^([^.]+).*$/\1/; s/^[^0-9]*([0-9]+).*$/\1/')
 echo "Number of failed tests: $FAILURES_COUNT"
 
 # fail script.sh if behat returned at least one failure
