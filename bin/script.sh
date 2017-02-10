@@ -16,7 +16,7 @@ for TEST in ${BEHAT_TESTS[@]}; do
   if [[ $TEST_RESULT == *"Failed"* ]] || [[ $TEST_RESULT == *"Terminated"* ]]; then
     ((FAILURES_COUNT++))
     # drush @local si -y stanford
-    timeout 3m bin/behat -p default -s all -f pretty features/$REPOSITORY_NAME/$TEST
+    # timeout 3m bin/behat -p default -s all -f pretty features/$REPOSITORY_NAME/$TEST
   fi
 done
 
