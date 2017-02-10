@@ -12,12 +12,13 @@ FAILURES_COUNT=0
 
 # run through each test, one at a time
 for TEST in ${BEHAT_TESTS[@]}; do
-  TEST_RESULT=$(timeout 3m bin/behat -p default -s all -f pretty features/$REPOSITORY_NAME/$TEST)
-  if [[ $TEST_RESULT == *"Failed"* ]] || [[ $TEST_RESULT == *"Terminated"* ]]; then
-    ((FAILURES_COUNT++))
-    drush @local si -y stanford
-    timeout 3m bin/behat -p default -s all -f pretty features/$REPOSITORY_NAME/$TEST
-  fi
+  timeout 3m bin/behat -p default -s all -f pretty features/$REPOSITORY_NAME/$TEST
+  # TEST_RESULT=$(timeout 3m bin/behat -p default -s all -f pretty features/$REPOSITORY_NAME/$TEST)
+  # if [[ $TEST_RESULT == *"Failed"* ]] || [[ $TEST_RESULT == *"Terminated"* ]]; then
+    # ((FAILURES_COUNT++))
+    # drush @local si -y stanford
+    # timeout 3m bin/behat -p default -s all -f pretty features/$REPOSITORY_NAME/$TEST
+  # fi
 done
 
 echo "Number of failed tests: $FAILURES_COUNT"

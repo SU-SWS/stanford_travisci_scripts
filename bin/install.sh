@@ -24,8 +24,16 @@ else
   export PROFILE_NAME=$(find $TRAVIS_BUILD_DIR/html/profiles -name "*jumpstart*" -type d -printf '%f\n')
   drush @local si -y $PROFILE_NAME --db-url=mysql://root@localhost/drupal --account-name=admin --account-pass=admin
 fi
+# Adjust the rewrite base for the local host.
 sed -ie "s|# RewriteBase /|RewriteBase /|" $TRAVIS_BUILD_DIR/html/.htaccess
+
+# Place the base path in the settings.php file because it has a non default port.
+chmod 0777 $TRAVIS_BUILD_DIR/html/sites/default/settings.php
 sudo echo "\$base_url = \"http://127.0.0.1:8080\";" >> $TRAVIS_BUILD_DIR/html/sites/default/settings.php
+chmod 0644 $TRAVIS_BUILD_DIR/html/sites/default/settings.php
+
+# Ensure that files is writable.
+chmod 0777 $TRAVIS_BUILD_DIR/html/sites/default/files
 
 # Disable modules based on testing requirements.
 if [ ! -z "$DISABLE_MODULES" ]; then
