@@ -25,6 +25,7 @@ else
   drush @local si -y $PROFILE_NAME --db-url=mysql://root@localhost/drupal --account-name=admin --account-pass=admin
 fi
 sed -ie "s|# RewriteBase /|RewriteBase /|" $TRAVIS_BUILD_DIR/html/.htaccess
+sudo echo "\$base_url = \"http://127.0.0.1:8080\";" >> $TRAVIS_BUILD_DIR/html/sites/default/settings.php
 
 # Disable modules based on testing requirements.
 if [ ! -z "$DISABLE_MODULES" ]; then
