@@ -10,7 +10,6 @@ default:
   extensions:
     Behat\MinkExtension:
       goutte: ~
-      default_session: selenium2
       javascript_session: selenium2
       browser_name: firefox
       selenium2:
