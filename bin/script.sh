@@ -4,6 +4,7 @@
 export PATH="$HOME/.composer/vendor/bin:$PATH"
 
 # run through all tests in features directory
+cd $HOME/stanford_travisci_scripts
 bin/behat -p default -s dev features
 
 # grap the number of failures from behat's html output summary report
