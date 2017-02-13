@@ -30,7 +30,11 @@ sed -ie "s|# RewriteBase /|RewriteBase /|" $TRAVIS_BUILD_DIR/html/.htaccess
 
 # Move latest module version into sites/all/stanford
 rm -rf $TRAVIS_BUILD_DIR/html/sites/all/modules/stanford/$REPOSITORY_NAME
+echo "git clone -b $TRAVIS_PULL_REQUEST_BRANCH https://github.com/SU-SWS/$REPOSITORY_NAME.git $TRAVIS_BUILD_DIR/html/sites/all/modules/stanford/$REPOSITORY_NAME"
 git clone -b $TRAVIS_PULL_REQUEST_BRANCH https://github.com/SU-SWS/$REPOSITORY_NAME.git $TRAVIS_BUILD_DIR/html/sites/all/modules/stanford/$REPOSITORY_NAME
+cd $TRAVIS_BUILD_DIR/html/sites/all/modules/stanford/stanford_image_styles
+git log
+cat $TRAVIS_BUILD_DIR/html/sites/all/modules/stanford/stanford_image_styles/stanford_image_styles.features.inc
 drush @local updb -y
 
 # Place the base path in the settings.php file because it has a non default port.
