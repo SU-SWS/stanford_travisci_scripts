@@ -33,7 +33,7 @@ kill $(lsof -t -i:8080)
 
 # start php runserver silently and from within site directory
 # alias failed to find webroot
-cd $TRAVIS_BUILD_DIR/html
+cd $HOME/html
 drush runserver 127.0.0.1:8080 &>/dev/null &
 # wait until server is up and running before proceeding
 until netstat -an 2>/dev/null | grep '8080.*LISTEN'; do true; done
