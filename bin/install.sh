@@ -54,6 +54,7 @@ for MODULE_NAME in $ENABLE_MODULES; do
 done
 
 # Enable modules and submodules if specified.
+drush @local en -y $REPOSITORY_NAME
 if [ ! -z "$ENABLE_MODULES" ]; then
   drush @local en -y $ENABLE_MODULES
 fi
