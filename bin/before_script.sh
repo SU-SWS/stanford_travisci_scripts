@@ -11,12 +11,14 @@ mkdir $HOME/stanford_travisci_scripts/includes/extensions
 ls $HOME/stanford_travisci_scripts/features
 
 # copy over feature tests
-if [ ! -z "$ONLY_TEST" ]; then
-  TEST_PATH=$(find $HOME/linky_clicky -type f -name "$ONLY_TEST.feature")
-  echo $TEST_PATH
-  cp $TEST_PATH $HOME/stanford_travisci_scripts/features/$ONLY_TEST.feature
-  ls $HOME/stanford_travisci_scripts/features
+if [ ! -z "${ONLY_TEST[*]}" ]; then
+  for $TEST in ${ONLY_TEST[@]}; do
+    TEST_PATH=$(find $HOME/linky_clicky -type f -name "$ONLY_TEST.feature")
+    echo $TEST_PATH
+    cp $TEST_PATH $HOME/stanford_travisci_scripts/features/$ONLY_TEST.feature
+  done
 fi
+ls $HOME/stanford_travisci_scripts/features
 cp -r $HOME/linky_clicky/includes/features/SU-SWS/$REPOSITORY_NAME $HOME/stanford_travisci_scripts/features/.
 cp $HOME/linky_clicky/includes/bootstrap/* $HOME/stanford_travisci_scripts/features/bootstrap/.
 cp $HOME/linky_clicky/includes/config/default.yml $HOME/stanford_travisci_scripts/includes/config/.
