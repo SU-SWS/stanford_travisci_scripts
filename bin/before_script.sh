@@ -11,8 +11,9 @@ mkdir $HOME/stanford_travisci_scripts/includes/extensions
 ls $HOME/stanford_travisci_scripts/features
 
 # copy over feature tests
-if [ ! -z "${ONLY_TEST[*]}" ]; then
-  for $TEST in ${ONLY_TEST[@]}; do
+if [ ! -z "$ONLY_TEST" ]; then
+  TESTS=(`echo ${ONLY_TEST}`)
+  for $TEST in ${TESTS[@]}; do
     TEST_PATH=$(find $HOME/linky_clicky -type f -name "$ONLY_TEST.feature")
     echo $TEST_PATH
     cp $TEST_PATH $HOME/stanford_travisci_scripts/features/$ONLY_TEST.feature
