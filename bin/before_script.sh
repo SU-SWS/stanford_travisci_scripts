@@ -12,11 +12,13 @@ ls $HOME/stanford_travisci_scripts/features
 
 # copy over feature tests
 if [ ! -z "$ONLY_TEST" ]; then
+  echo "$ONLY_TEST"
   TESTS=(`echo ${ONLY_TEST}`)
-  for $TEST in ${TESTS[@]}; do
-    TEST_PATH=$(find $HOME/linky_clicky -type f -name "$ONLY_TEST.feature")
+  echo "${TESTS[*]}"
+  for TEST in ${TESTS[@]}; do
+    TEST_PATH=$(find $HOME/linky_clicky -type f -name "$TEST.feature")
     echo $TEST_PATH
-    cp $TEST_PATH $HOME/stanford_travisci_scripts/features/$ONLY_TEST.feature
+    cp $TEST_PATH $HOME/stanford_travisci_scripts/features/$TEST.feature
   done
 fi
 ls $HOME/stanford_travisci_scripts/features
