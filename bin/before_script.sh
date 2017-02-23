@@ -2,7 +2,7 @@
 
 # before_script
 export PATH="$HOME/.composer/vendor/bin:$PATH"
-export REPOSITORY_NAME=$(find $TRAVIS_BUILD_URL -mindepth 1 -maxdepth 1 -type d -printf '%f\n')
+# export REPOSITORY_NAME=$(find $TRAVIS_BUILD_URL -mindepth 1 -maxdepth 1 -type d -printf '%f\n')
 # download linky_clicky and copy over related tests and required files
 if [ ! -z "$CLICKY_BRANCH" ]; then CLICKY_BRANCH="-b $CLICKY_BRANCH"; fi
 git clone --depth 1 $CLICKY_BRANCH https://github.com/SU-SWS/linky_clicky.git $HOME/linky_clicky
@@ -11,8 +11,8 @@ mkdir $HOME/stanford_travisci_scripts/includes/extensions
 ls $HOME/stanford_travisci_scripts/features
 
 # copy over product tests
-if [ -z "$REPOSITORY_NAME" ]; then
-  REPOSITORY_NAME="stanford-jumpstart-deployer"
+REPOSITORY_NAME="stanford-jumpstart-deployer"
+if [ "$REPOSITORY_NAME" == "stanford-jumpstart-deployer" ]; then
   declare -A PRODUCTS_LIST=(
     ["jumpstart-academic"]="-jsa"
     ["jumpstart-plus"]="-jsplus"
