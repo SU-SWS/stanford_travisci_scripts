@@ -20,7 +20,6 @@ if [ "$REPOSITORY_NAME" == "stanford-jumpstart-deployer" ]; then
     ["jumpstart-lab"]="jsl"
   )
   SUFFIX="${PRODUCTS_LIST[$PRODUCT_NAME]}"
-  echo "Suffix: $SUFFIX"
   echo "cp -r $HOME/linky_clicky/products/$SUFFIX/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME"
   cp -r $HOME/linky_clicky/products/$SUFFIX/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
 # copy over self-service site testes
