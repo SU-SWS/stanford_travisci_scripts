@@ -14,10 +14,10 @@ ls $HOME/stanford_travisci_scripts/features
 REPOSITORY_NAME="stanford-jumpstart-deployer"
 if [ "$REPOSITORY_NAME" == "stanford-jumpstart-deployer" ]; then
   declare -A PRODUCTS_LIST=(
-    ["jumpstart-academic"]="-jsa"
-    ["jumpstart-plus"]="-jsplus"
-    ["jumpstart"]="-jsv"
-    ["jumpstart-lab"]="-jsl"
+    ["jumpstart-academic"]="jsa"
+    ["jumpstart-plus"]="jsplus"
+    ["jumpstart"]="jsv"
+    ["jumpstart-lab"]="jsl"
   )
   SUFFIX="${PRODUCTS_LIST[$PRODUCT_NAME]}"
   echo "Suffix: $SUFFIX"
