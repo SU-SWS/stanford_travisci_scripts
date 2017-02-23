@@ -10,6 +10,19 @@ mkdir -p $HOME/stanford_travisci_scripts/includes/config
 mkdir $HOME/stanford_travisci_scripts/includes/extensions
 ls $HOME/stanford_travisci_scripts/features
 
+# copy over product tests
+if [[ $REPOSITORY_NAME == "stanford-jumpstart-deployer" ]]; then
+  declare -A PRODUCTS_LIST=(
+    ["jumpstart-academic"]="-jsa"
+    ["jumpstart-plus"]="-jsplus"
+    ["jumpstart"]="-jsv"
+    ["jumpstart-lab"]="-jsl"
+  )
+  SUFFIX="${PRODUCTS_LIST[$PRODUCT_NAME]}"
+  echo $SUFFIX
+  cp -r $HOME/linky_clicky/products/$SUFFIX/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
+fi
+
 # copy over feature tests
 if [ ! -z "$ONLY_TEST" ]; then
   echo "$ONLY_TEST"
