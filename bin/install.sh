@@ -3,6 +3,9 @@
 # install
 export PATH="$HOME/.composer/vendor/bin:$PATH"
 export REPOSITORY_NAME=$(find $TRAVIS_BUILD_URL -mindepth 1 -maxdepth 1 -name "*.info" -type f -printf '%f\n' | cut -f1 -d".")
+if [ -z "$REPOSITORY_NAME"]; then
+  REPOSITORY_NAME="stanford-jumpstart-deployer"
+fi
 sed "s|ACCESS_TOKEN|$ACCESS_TOKEN|" $HOME/stanford_travisci_scripts/.netrc > $HOME/.netrc
 
 # save drush alias and update .htaccess file to allow rewriting
