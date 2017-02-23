@@ -23,8 +23,8 @@ if [ "$REPOSITORY_NAME" == "stanford-jumpstart-deployer" ]; then
   echo "cp -r $HOME/linky_clicky/products/$SUFFIX/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME"
   cp -r $HOME/linky_clicky/products/$SUFFIX/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
 # copy over self-service site testes
-elseif [ "$REPOSITORY_NAME" == "Stanford-Drupal-Profile" ]; then
-  
+elif [ "$REPOSITORY_NAME" == "Stanford-Drupal-Profile" ]; then
+  cp -r $HOME/linky_clicky/sites/uat/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
 fi
 
 # copy over feature tests

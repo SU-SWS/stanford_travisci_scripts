@@ -3,7 +3,7 @@
 # install
 export PATH="$HOME/.composer/vendor/bin:$PATH"
 export REPOSITORY_NAME=$(basename $TRAVIS_BUILD_DIR)
-echo $REPOSITORY_NAME
+echo "$REPOSITORY_NAME"
 sed "s|ACCESS_TOKEN|$ACCESS_TOKEN|" $HOME/stanford_travisci_scripts/.netrc > $HOME/.netrc
 
 # save drush alias and update .htaccess file to allow rewriting
