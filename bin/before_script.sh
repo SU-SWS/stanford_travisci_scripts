@@ -2,7 +2,7 @@
 
 # before_script
 export PATH="$HOME/.composer/vendor/bin:$PATH"
-export REPOSITORY_NAME=$(find $TRAVIS_BUILD_URL -mindepth 1 -maxdepth 1 -name "*.info" -type f -printf '%f\n' | cut -f1 -d".")
+export REPOSITORY_NAME=$(basename $TRAVIS_BUILD_DIR)
 # download linky_clicky and copy over related tests and required files
 if [ ! -z "$CLICKY_BRANCH" ]; then CLICKY_BRANCH="-b $CLICKY_BRANCH"; fi
 git clone --depth 1 $CLICKY_BRANCH https://github.com/SU-SWS/linky_clicky.git $HOME/linky_clicky
@@ -22,6 +22,9 @@ if [ "$REPOSITORY_NAME" == "stanford-jumpstart-deployer" ]; then
   echo "Suffix: $SUFFIX"
   echo "cp -r $HOME/linky_clicky/products/$SUFFIX/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME"
   cp -r $HOME/linky_clicky/products/$SUFFIX/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
+# copy over self-service site testes
+elseif [ "$REPOSITORY_NAME" == "Stanford-Drupal-Profile" ]; then
+  
 fi
 
 # copy over feature tests

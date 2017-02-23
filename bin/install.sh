@@ -2,10 +2,7 @@
 
 # install
 export PATH="$HOME/.composer/vendor/bin:$PATH"
-export REPOSITORY_NAME=$(find $TRAVIS_BUILD_URL -mindepth 1 -maxdepth 1 -name "*.info" -type f -printf '%f\n' | cut -f1 -d".")
-if [ -z "$REPOSITORY_NAME"]; then
-  REPOSITORY_NAME="stanford-jumpstart-deployer"
-fi
+export REPOSITORY_NAME=$(basename $TRAVIS_BUILD_DIR)
 sed "s|ACCESS_TOKEN|$ACCESS_TOKEN|" $HOME/stanford_travisci_scripts/.netrc > $HOME/.netrc
 
 # save drush alias and update .htaccess file to allow rewriting
@@ -15,12 +12,18 @@ sed -ie "s|HOME|$HOME|" $HOME/.drush/aliases.drushrc.php
 cat $HOME/.drush/aliases.drushrc.php
 
 if [ -z "$PRODUCT_NAME" ]; then
+  if [ "$REPOSITORY_NAME" == "Stanford-Drupal-Profile" ]; then
+    DRUPAL_PROFILE_BRANCH="$TRAVIS_PULL_REQUEST_BRANCH"
+  fi
   if [ ! -z "$DRUPAL_PROFILE_BRANCH" ]; then DRUPAL_PROFILE_BRANCH="-b $DRUPAL_PROFILE_BRANCH"; fi
   git clone --depth 1 $DRUPAL_PROFILE_BRANCH https://github.com/SU-SWS/Stanford-Drupal-Profile.git $HOME/Stanford-Drupal-Profile
   grep -rl 'git@github.com:' $HOME/Stanford-Drupal-Profile | xargs sed -i 's|git@github.com:|https://github.com/|'
   drush make -y --force-complete $HOME/Stanford-Drupal-Profile/make/dept.make $HOME/html
   drush @local si -y stanford --db-url=mysql://root@localhost/drupal --account-name=admin --account-pass=admin
 else
+  if [ "$REPOSITORY_NAME" == "stanford-jumpstart-deployer" ]; then
+    DEPLOYER_BRANCH="$TRAVIS_PULL_REQUEST_BRANCH"
+  fi
   if [ ! -z "$DEPLOYER_BRANCH" ]; then DEPLOYER_BRANCH="-b $DEPLOYER_BRANCH"; fi
   git clone --depth 1 $DEPLOYER_BRANCH https://github.com/SU-SWS/stanford-jumpstart-deployer.git $HOME/stanford-jumpstart-deployer
   grep -rl 'git@github.com:' $HOME/stanford-jumpstart-deployer | xargs sed -i 's|git@github.com:|https://github.com/|'
