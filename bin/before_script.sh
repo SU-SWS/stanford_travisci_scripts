@@ -14,6 +14,7 @@ ls $HOME/stanford_travisci_scripts/features
 if [ "$REPOSITORY_NAME" == "stanford-jumpstart-deployer" ]; then
   declare -A PRODUCTS_LIST=(
     ["jumpstart-academic"]="jsa"
+    ["jumpstart-engineering"]="jse"
     ["jumpstart-plus"]="jsplus"
     ["jumpstart"]="jsv"
     ["jumpstart-lab"]="jsl"
