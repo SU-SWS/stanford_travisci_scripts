@@ -43,7 +43,7 @@ function copy_single_test {
   for TEST in ${TESTS[@]}; do
     TEST_PATH=$(find $HOME/linky_clicky -type f -name "$TEST.feature")
     echo $TEST_PATH
-    cp $TEST_PATH $HOME/stanford_travisci_scripts/features/$TEST.feature
+    cp $TEST_PATH $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME/$TEST.feature
   done
 }
 
@@ -57,6 +57,9 @@ elif [ "$REPOSITORY_NAME" == "Stanford-Drupal-Profile" ]; then
 else
   copy_module_tests
 fi
+
+# output which tests have been copied over
+find $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME -type d -name "*.feature"
 
 # start xvfb virtual display
 export DISPLAY=:99.0
