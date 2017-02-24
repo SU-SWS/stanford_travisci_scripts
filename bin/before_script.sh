@@ -43,7 +43,7 @@ function copy_single_test {
   TESTS=(`echo ${ONLY_TEST}`)
   for TEST in ${TESTS[@]}; do
     TEST_PATH=$(find $HOME/linky_clicky -type f -name "$TEST.feature")
-    cp $TEST_PATH $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME/$TEST.feature $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME/.
+    cp $TEST_PATH $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME/$TEST.feature
   done
 }
 
@@ -60,7 +60,7 @@ fi
 
 # output which tests have been copied over
 echo "features ready for test run"
-find $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME -type d -name "*.feature"
+echo $(find $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME -type d -name "*.feature")
 
 # start xvfb virtual display
 export DISPLAY=:99.0
