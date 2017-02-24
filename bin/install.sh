@@ -52,7 +52,10 @@ fi
 # Download stanford modules if not already present in sites/all/stanford.
 for MODULE_NAME in $ENABLE_MODULES; do
   if [[ "$MODULE_NAME" == "stanford"* ]] && [ ! -d $HOME/html/sites/all/modules/stanford/$MODULE_NAME ]; then
-    git clone https://github.com/SU-SWS/$MODULE_NAME.git $HOME/html/sites/all/modules/stanford/$MODULE_NAME
+    EXISTS=$(curl -X HEAD -I https://github.com/SU-SWS/$MODULE_NAME 2>/dev/null | head -n 1);
+    if [[ $EXISTS =~ .*200\ OK.* ]]; then
+      git clone https://github.com/SU-SWS/$MODULE_NAME.git $HOME/html/sites/all/modules/stanford/$MODULE_NAME
+    fi
   fi
 done
 
