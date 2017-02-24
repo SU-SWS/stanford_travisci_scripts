@@ -60,7 +60,8 @@ fi
 
 # output which tests have been copied over
 echo "features ready for test run"
-basename `find $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME -type f -name "*.feature"`
+TESTS_READY_TO_RUN=$(basename `find $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME -type f -name "*.feature"`)
+echo "$TESTS_READY_TO_RUN"
 
 # start xvfb virtual display
 export DISPLAY=:99.0
