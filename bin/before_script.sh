@@ -39,11 +39,11 @@ function copy_module_tests {
 
 # loop through and copy specific tests called for by ONLY_TEST variable
 function copy_single_test {
+  mkdir $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
   TESTS=(`echo ${ONLY_TEST}`)
   for TEST in ${TESTS[@]}; do
     TEST_PATH=$(find $HOME/linky_clicky -type f -name "$TEST.feature")
-    echo $TEST_PATH
-    cp $TEST_PATH $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME/$TEST.feature
+    cp $TEST_PATH $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME/$TEST.feature $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME/.
   done
 }
 
@@ -59,6 +59,7 @@ else
 fi
 
 # output which tests have been copied over
+echo "features ready for test run"
 find $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME -type d -name "*.feature"
 
 # start xvfb virtual display
