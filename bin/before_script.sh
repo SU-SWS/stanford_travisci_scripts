@@ -3,15 +3,20 @@
 # before_script
 export PATH="$HOME/.composer/vendor/bin:$PATH"
 export REPOSITORY_NAME=$(basename $TRAVIS_BUILD_DIR)
+
 # download linky_clicky and copy over related tests and required files
 if [ ! -z "$CLICKY_BRANCH" ]; then CLICKY_BRANCH="-b $CLICKY_BRANCH"; fi
+echo "git clone --depth 1 $CLICKY_BRANCH https://github.com/SU-SWS/linky_clicky.git $HOME/linky_clicky"
 git clone --depth 1 $CLICKY_BRANCH https://github.com/SU-SWS/linky_clicky.git $HOME/linky_clicky
 mkdir -p $HOME/stanford_travisci_scripts/includes/config
 mkdir $HOME/stanford_travisci_scripts/includes/extensions
-ls $HOME/stanford_travisci_scripts/features
+cp $HOME/linky_clicky/includes/bootstrap/* $HOME/stanford_travisci_scripts/features/bootstrap/.
+cp $HOME/linky_clicky/includes/config/default.yml $HOME/stanford_travisci_scripts/includes/config/.
+cp $HOME/linky_clicky/includes/extensions/drupal.extension.yml $HOME/stanford_travisci_scripts/includes/extensions/.
+cp $HOME/linky_clicky/includes/extensions/mink.extension.yml $HOME/stanford_travisci_scripts/includes/extensions/.
 
-# copy over product tests
-if [ "$REPOSITORY_NAME" == "stanford-jumpstart-deployer" ]; then
+# copy over production product tests
+function copy_product_tests {
   declare -A PRODUCTS_LIST=(
     ["jumpstart-academic"]="jsa"
     ["jumpstart-engineering"]="jse"
@@ -19,31 +24,39 @@ if [ "$REPOSITORY_NAME" == "stanford-jumpstart-deployer" ]; then
     ["jumpstart"]="jsv"
     ["jumpstart-lab"]="jsl"
   )
-  SUFFIX="${PRODUCTS_LIST[$PRODUCT_NAME]}"
-  echo "cp -r $HOME/linky_clicky/products/$SUFFIX/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME"
-  cp -r $HOME/linky_clicky/products/$SUFFIX/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
-# copy over self-service site testes
-elif [ "$REPOSITORY_NAME" == "Stanford-Drupal-Profile" ]; then
-  cp -r $HOME/linky_clicky/sites/uat/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
-fi
+  ACRONYM="${PRODUCTS_LIST[$PRODUCT_NAME]}"
+  echo "cp -r $HOME/linky_clicky/products/$ACRONYM/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME"
+  cp -r $HOME/linky_clicky/products/$ACRONYM/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
+}
 
-# copy over feature tests
-if [ ! -z "$ONLY_TEST" ]; then
-  echo "$ONLY_TEST"
+function copy_uat_tests {
+  cp -r $HOME/linky_clicky/sites/uat/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
+}
+
+function copy_module_tests {
+  cp -r $HOME/linky_clicky/includes/features/SU-SWS/$REPOSITORY_NAME $HOME/stanford_travisci_scripts/features/.
+}
+
+# loop through and copy specific tests called for by ONLY_TEST variable
+function copy_single_test {
   TESTS=(`echo ${ONLY_TEST}`)
-  echo "${TESTS[*]}"
   for TEST in ${TESTS[@]}; do
     TEST_PATH=$(find $HOME/linky_clicky -type f -name "$TEST.feature")
     echo $TEST_PATH
     cp $TEST_PATH $HOME/stanford_travisci_scripts/features/$TEST.feature
   done
+}
+
+# determine which tests to copy based on type of repository or ONLY_TEST variable
+if [ ! -z "$ONLY_TEST" ]; then
+  copy_single_test
+elif [ "$REPOSITORY_NAME" == "stanford-jumpstart-deployer" ]; then
+  copy_product_tests
+elif [ "$REPOSITORY_NAME" == "Stanford-Drupal-Profile" ]; then
+  copy_uat_tests
+else
+  copy_module_tests
 fi
-ls $HOME/stanford_travisci_scripts/features
-cp -r $HOME/linky_clicky/includes/features/SU-SWS/$REPOSITORY_NAME $HOME/stanford_travisci_scripts/features/.
-cp $HOME/linky_clicky/includes/bootstrap/* $HOME/stanford_travisci_scripts/features/bootstrap/.
-cp $HOME/linky_clicky/includes/config/default.yml $HOME/stanford_travisci_scripts/includes/config/.
-cp $HOME/linky_clicky/includes/extensions/drupal.extension.yml $HOME/stanford_travisci_scripts/includes/extensions/.
-cp $HOME/linky_clicky/includes/extensions/mink.extension.yml $HOME/stanford_travisci_scripts/includes/extensions/.
 
 # start xvfb virtual display
 export DISPLAY=:99.0
