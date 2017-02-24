@@ -16,7 +16,7 @@ echo "Number of failed tests: $FAILURES_COUNT"
 echo "Number of tests counted: $TESTS_COUNT"
 
 # fail script.sh if behat returned at least one failure
-if (( $FAILURES_COUNT > 0 )) || (( $TESTS_COUNT > 0 )); then
+if (( $FAILURES_COUNT > 0 )) || (( $TESTS_COUNT == 0 )); then
   exit 1
 else
   exit 0
