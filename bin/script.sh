@@ -9,10 +9,12 @@ bin/behat -p default -s dev features
 
 # grap the number of failures from behat's html output summary report
 FAILURES_COUNT=$(cat behat_results/index.html | grep 'scenarios failed of' | sed -r 's/^([^.]+).*$/\1/; s/^[^0-9]*([0-9]+).*$/\1/')
+TESTS_COUNT=$(cat features/*/*.feature | grep -c "Scenario")
+
 echo "Number of failed tests: $FAILURES_COUNT"
 
 # fail script.sh if behat returned at least one failure
-if (( $FAILURES_COUNT > 0 )); then
+if (( $FAILURES_COUNT > 0 )) || (( $TESTS_COUNT == 0 )); then
   exit 1
 else
   exit 0
