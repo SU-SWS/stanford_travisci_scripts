@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source includes/script_functions.inc
+
 # before_script
 export PATH="$HOME/.composer/vendor/bin:$PATH"
 export REPOSITORY_NAME=$(basename $TRAVIS_BUILD_DIR)
@@ -25,8 +27,10 @@ function copy_product_tests {
     ["jumpstart-lab"]="jsl"
   )
   ACRONYM="${PRODUCTS_LIST[$PRODUCT_NAME]}"
-  echo "cp -r $HOME/linky_clicky/products/$ACRONYM/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME"
-  cp -r $HOME/linky_clicky/products/$ACRONYM/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
+  if [ ! -z "$ACRONYM" ]; then
+    echo "cp -r $HOME/linky_clicky/products/$ACRONYM/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME"
+    cp -r $HOME/linky_clicky/products/$ACRONYM/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
+  fi
 }
 
 function copy_uat_tests {
