@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# functions used by install.sh to determine which make files should be used to build a site
 function install_from_deployer {
   # clone deployer and echo which branch will be cloned and used for the site build
   if [ ! -z "$DEPLOYER_BRANCH" ]; then DEPLOYER_BRANCH="-b $DEPLOYER_BRANCH"; fi

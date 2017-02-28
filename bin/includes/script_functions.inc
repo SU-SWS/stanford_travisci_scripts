@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# functions used by before_script.sh to determine which tests should be run
 # copy over production product tests
 function copy_product_tests {
   declare -A PRODUCTS_LIST=(
