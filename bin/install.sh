@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source includes/install_functions.inc
+source $HOME/stanford_travisci_scripts/bin/includes/install_functions.inc
 
 # install
 export PATH="$HOME/.composer/vendor/bin:$PATH"

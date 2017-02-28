@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source includes/script_functions.inc
+source $HOME/stanford_travisci_scripts/bin/includes/script_functions.inc
 
 # before_script
 export PATH="$HOME/.composer/vendor/bin:$PATH"
