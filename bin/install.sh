@@ -1,11 +1,12 @@
 #!/bin/bash
 
+source $HOME/stanford_travisci_scripts/bin/includes/install_functions.inc
+
 # install
 export PATH="$HOME/.composer/vendor/bin:$PATH"
-export REPOSITORY_NAME=$(find $TRAVIS_BUILD_URL -mindepth 1 -maxdepth 1 -name "*.info" -type f -printf '%f\n' | cut -f1 -d".")
-if [ -z "$REPOSITORY_NAME"]; then
-  REPOSITORY_NAME="stanford-jumpstart-deployer"
-fi
+export REPOSITORY_NAME=$(basename $TRAVIS_BUILD_DIR)
+
+# save GitHub access token so we can clone from private repositories
 sed "s|ACCESS_TOKEN|$ACCESS_TOKEN|" $HOME/stanford_travisci_scripts/.netrc > $HOME/.netrc
 
 # save drush alias and update .htaccess file to allow rewriting
@@ -14,20 +15,13 @@ cp $HOME/stanford_travisci_scripts/aliases.drushrc.php $HOME/.drush/aliases.drus
 sed -ie "s|HOME|$HOME|" $HOME/.drush/aliases.drushrc.php
 cat $HOME/.drush/aliases.drushrc.php
 
+update_test_branch
 if [ -z "$PRODUCT_NAME" ]; then
-  if [ ! -z "$DRUPAL_PROFILE_BRANCH" ]; then DRUPAL_PROFILE_BRANCH="-b $DRUPAL_PROFILE_BRANCH"; fi
-  git clone --depth 1 $DRUPAL_PROFILE_BRANCH https://github.com/SU-SWS/Stanford-Drupal-Profile.git $HOME/Stanford-Drupal-Profile
-  grep -rl 'git@github.com:' $HOME/Stanford-Drupal-Profile | xargs sed -i 's|git@github.com:|https://github.com/|'
-  drush make -y --force-complete $HOME/Stanford-Drupal-Profile/make/dept.make $HOME/html
-  drush @local si -y stanford --db-url=mysql://root@localhost/drupal --account-name=admin --account-pass=admin
+  install_from_drupal_profile
 else
-  if [ ! -z "$DEPLOYER_BRANCH" ]; then DEPLOYER_BRANCH="-b $DEPLOYER_BRANCH"; fi
-  git clone --depth 1 $DEPLOYER_BRANCH https://github.com/SU-SWS/stanford-jumpstart-deployer.git $HOME/stanford-jumpstart-deployer
-  grep -rl 'git@github.com:' $HOME/stanford-jumpstart-deployer | xargs sed -i 's|git@github.com:|https://github.com/|'
-  drush make -y --force-complete $HOME/stanford-jumpstart-deployer/production/product/$PRODUCT_NAME/$PRODUCT_NAME.make $HOME/html
-  export PROFILE_NAME=$(find $HOME/html/profiles -name "*jumpstart*" -type d -printf '%f\n')
-  drush @local si -y $PROFILE_NAME --db-url=mysql://root@localhost/drupal --account-name=admin --account-pass=admin
+  install_from_deployer
 fi
+
 # Adjust the rewrite base for the local host.
 sed -ie "s|# RewriteBase /|RewriteBase /|" $HOME/html/.htaccess
 
@@ -60,7 +54,9 @@ for MODULE_NAME in $ENABLE_MODULES; do
 done
 
 # Enable modules and submodules if specified.
-drush @local en -y $REPOSITORY_NAME
+if [[ ! "$REPOSITORY_NAME" =~ "Stanford-Drupal-Profile"|"stanford-jumpstart-deployer" ]]; then
+  drush @local en -y $REPOSITORY_NAME
+fi
 if [ ! -z "$ENABLE_MODULES" ]; then
   drush @local en -y $ENABLE_MODULES
 fi

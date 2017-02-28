@@ -1,46 +1,70 @@
 #!/bin/bash
 
+source $HOME/stanford_travisci_scripts/bin/includes/script_functions.inc
+
 # before_script
 export PATH="$HOME/.composer/vendor/bin:$PATH"
-export REPOSITORY_NAME=$(find $TRAVIS_BUILD_URL -mindepth 1 -maxdepth 1 -name "*.info" -type f -printf '%f\n' | cut -f1 -d".")
+export REPOSITORY_NAME=$(basename $TRAVIS_BUILD_DIR)
+
 # download linky_clicky and copy over related tests and required files
 if [ ! -z "$CLICKY_BRANCH" ]; then CLICKY_BRANCH="-b $CLICKY_BRANCH"; fi
+echo "git clone --depth 1 $CLICKY_BRANCH https://github.com/SU-SWS/linky_clicky.git $HOME/linky_clicky"
 git clone --depth 1 $CLICKY_BRANCH https://github.com/SU-SWS/linky_clicky.git $HOME/linky_clicky
 mkdir -p $HOME/stanford_travisci_scripts/includes/config
 mkdir $HOME/stanford_travisci_scripts/includes/extensions
-ls $HOME/stanford_travisci_scripts/features
-
-# copy over product tests
-if [ "$REPOSITORY_NAME" == "stanford-jumpstart-deployer" ]; then
-  declare -A PRODUCTS_LIST=(
-    ["jumpstart-academic"]="jsa"
-    ["jumpstart-plus"]="jsplus"
-    ["jumpstart"]="jsv"
-    ["jumpstart-lab"]="jsl"
-  )
-  SUFFIX="${PRODUCTS_LIST[$PRODUCT_NAME]}"
-  echo "Suffix: $SUFFIX"
-  echo "cp -r $HOME/linky_clicky/products/$SUFFIX/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME"
-  cp -r $HOME/linky_clicky/products/$SUFFIX/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
-fi
-
-# copy over feature tests
-if [ ! -z "$ONLY_TEST" ]; then
-  echo "$ONLY_TEST"
-  TESTS=(`echo ${ONLY_TEST}`)
-  echo "${TESTS[*]}"
-  for TEST in ${TESTS[@]}; do
-    TEST_PATH=$(find $HOME/linky_clicky -type f -name "$TEST.feature")
-    echo $TEST_PATH
-    cp $TEST_PATH $HOME/stanford_travisci_scripts/features/$TEST.feature
-  done
-fi
-ls $HOME/stanford_travisci_scripts/features
-cp -r $HOME/linky_clicky/includes/features/SU-SWS/$REPOSITORY_NAME $HOME/stanford_travisci_scripts/features/.
 cp $HOME/linky_clicky/includes/bootstrap/* $HOME/stanford_travisci_scripts/features/bootstrap/.
 cp $HOME/linky_clicky/includes/config/default.yml $HOME/stanford_travisci_scripts/includes/config/.
 cp $HOME/linky_clicky/includes/extensions/drupal.extension.yml $HOME/stanford_travisci_scripts/includes/extensions/.
 cp $HOME/linky_clicky/includes/extensions/mink.extension.yml $HOME/stanford_travisci_scripts/includes/extensions/.
+
+# copy over production product tests
+function copy_product_tests {
+  declare -A PRODUCTS_LIST=(
+    ["jumpstart-academic"]="jsa"
+    ["jumpstart-engineering"]="jse"
+    ["jumpstart-plus"]="jsplus"
+    ["jumpstart"]="jsv"
+    ["jumpstart-lab"]="jsl"
+  )
+  ACRONYM="${PRODUCTS_LIST[$PRODUCT_NAME]}"
+  if [ ! -z "$ACRONYM" ]; then
+    echo "cp -r $HOME/linky_clicky/products/$ACRONYM/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME"
+    cp -r $HOME/linky_clicky/products/$ACRONYM/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
+  fi
+}
+
+function copy_uat_tests {
+  cp -r $HOME/linky_clicky/sites/uat/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
+}
+
+function copy_module_tests {
+  cp -r $HOME/linky_clicky/includes/features/SU-SWS/$REPOSITORY_NAME $HOME/stanford_travisci_scripts/features/.
+}
+
+# loop through and copy specific tests called for by ONLY_TEST variable
+function copy_single_test {
+  mkdir $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
+  TESTS=(`echo ${ONLY_TEST}`)
+  for TEST in ${TESTS[@]}; do
+    TEST_PATH=$(find $HOME/linky_clicky -type f -name "$TEST.feature")
+    cp $TEST_PATH $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME/$TEST.feature
+  done
+}
+
+# determine which tests to copy based on type of repository or ONLY_TEST variable
+if [ ! -z "$ONLY_TEST" ]; then
+  copy_single_test
+elif [ "$REPOSITORY_NAME" == "stanford-jumpstart-deployer" ]; then
+  copy_product_tests
+elif [ "$REPOSITORY_NAME" == "Stanford-Drupal-Profile" ]; then
+  copy_uat_tests
+else
+  copy_module_tests
+fi
+
+# output which tests have been copied over
+echo "features ready for test run"
+find $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME -type f -name "*.feature"
 
 # start xvfb virtual display
 export DISPLAY=:99.0
