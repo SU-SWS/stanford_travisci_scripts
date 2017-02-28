@@ -51,7 +51,9 @@ for MODULE_NAME in $ENABLE_MODULES; do
 done
 
 # Enable modules and submodules if specified.
-drush @local en -y $REPOSITORY_NAME
+if [[ "$REPOSITORY_NAME" != "Stanford-Drupal-Profile" || "$REPOSITORY_NAME" != "stanford-jumpstart-deployer" ]]; then
+  drush @local en -y $REPOSITORY_NAME
+fi
 if [ ! -z "$ENABLE_MODULES" ]; then
   drush @local en -y $ENABLE_MODULES
 fi
