@@ -19,8 +19,10 @@ function copy_product_tests {
 
 function copy_uat_tests {
   cp -r $HOME/linky_clicky/sites/uat/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
-  # remove mollom, so long as it remains unencrypted
+  # remove mollom and capx features, so long as they remain unencrypted
   rm $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME/mollom.feature
+  rm $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME/stanford_capx.feature
+
 }
 
 function copy_module_tests {

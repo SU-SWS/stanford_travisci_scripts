@@ -15,7 +15,9 @@ FEATURE_FILES=$(find $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME -
 echo "Number of failed tests: $FAILURES_COUNT"
 
 # fail script.sh if behat returned at least one failure
-if (( $FAILURES_COUNT > 0 )) || [ -z "$FAILURES_COUNT" ] || [ -z "$FEATURE_FILES" ]; then
+if [ -z "$FAILURES_COUNT" ] || [ -z "$FEATURE_FILES" ]; then
+  exit 1
+elif (( $FAILURES_COUNT > 0 )); then
   exit 1
 else
   exit 0
