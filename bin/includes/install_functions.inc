@@ -11,7 +11,7 @@ function install_from_deployer {
   grep -rl 'git@github.com:' $HOME/stanford-jumpstart-deployer | xargs sed -i 's|git@github.com:|https://github.com/|'
 
   # build site based on specified product name
-  if [ -z "$PRODUCT_VERSION"]; then PRODUCT_VERSION="production"
+  if [ -z "$PRODUCT_VERSION"]; then PRODUCT_VERSION="production"; fi
   drush make -y --force-complete $HOME/stanford-jumpstart-deployer/$PRODUCT_VERSION/product/$PRODUCT_NAME/$PRODUCT_NAME.make $HOME/html
 
   # find profile name by looking for "jumpstart" in profiles directory
