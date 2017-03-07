@@ -39,9 +39,9 @@ function install_from_drupal_profile {
 
 function update_test_branch {
   # download pull request origination branch when testing profiles
-  if [ "$REPOSITORY_NAME" == "Stanford-Drupal-Profile" && -z "$DRUPAL_PROFILE_BRANCH"]; then
+  if [ "$REPOSITORY_NAME" == "Stanford-Drupal-Profile" && -z "$DRUPAL_PROFILE_BRANCH" ]; then
     DRUPAL_PROFILE_BRANCH="$TRAVIS_PULL_REQUEST_BRANCH"
-  elif [ "$REPOSITORY_NAME" == "stanford-jumpstart-deployer" && -z "$DEPLOYER_BRANCH"]; then
+  elif [ "$REPOSITORY_NAME" == "stanford-jumpstart-deployer" && -z "$DEPLOYER_BRANCH" ]; then
     DEPLOYER_BRANCH="$TRAVIS_PULL_REQUEST_BRANCH"
   fi
 }
