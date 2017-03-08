@@ -29,6 +29,12 @@ function copy_module_tests {
   cp -r $HOME/linky_clicky/includes/features/SU-SWS/$REPOSITORY_NAME $HOME/stanford_travisci_scripts/features/.
 }
 
+# find and copy assets when running a single test
+function copy_assets {
+  mkdir $HOME/stanford_travisci_scripts/features/img
+  find $HOME/linky_clicky -type f -name "*.png" -o -name "*.jpg" -exec cp  {} $HOME/stanford_travisci_scripts/features/img/ \;
+}
+
 # loop through and copy specific tests called for by ONLY_TEST variable
 function copy_single_test {
   mkdir $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
@@ -36,5 +42,6 @@ function copy_single_test {
   for TEST in ${TESTS[@]}; do
     TEST_PATH=$(find $HOME/linky_clicky -type f -name "$TEST.feature")
     cp $TEST_PATH $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME/$TEST.feature
+    copy_assets
   done
 }
