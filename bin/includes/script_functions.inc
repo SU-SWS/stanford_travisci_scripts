@@ -34,7 +34,8 @@ function copy_assets {
   mkdir $HOME/stanford_travisci_scripts/features/img
   ASSETS_FOUND=$(find $HOME/linky_clicky -type f -name "*.png" -o -name "*.jpg")
   echo "$ASSETS_FOUND"
-  find $HOME/linky_clicky -type f -name "*.png" -o -name "*.jpg" -exec cp  {} $HOME/stanford_travisci_scripts/features/img/ \;
+  find $HOME/linky_clicky -type f -name "*.png" -exec cp {} $HOME/stanford_travisci_scripts/features/img/ \;
+  find $HOME/linky_clicky -type f -name "*.jpg" -exec cp {} $HOME/stanford_travisci_scripts/features/img/ \;
 }
 
 # loop through and copy specific tests called for by ONLY_TEST variable
