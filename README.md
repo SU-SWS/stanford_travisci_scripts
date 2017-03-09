@@ -52,16 +52,16 @@ bundle install
 
 # Create project dir, assuming your project is `me/project` on GitHub
 cd ~/builds
-mkdir me
-cd me
+mkdir SU-SWS
+cd SU-SWS
 git clone https://github.com/SU-SWS/stanford_gallery.git
 cd project
 # Change to the branch or commit you want to investigate
 travis compile > ci.sh
 # Create variables used by scripts
-export REPOSITORY_NAME='stanford_gallery'
-export PRODUCT_NAME='jumpstart-academic'
+export TRAVIS_BUILD_DIR='/home/travis/build/SU-SWS/[repository name]'
 export ACCESS_TOKEN='[TOKEN]'
+export TRAVIS_PULL_REQUEST_BRANCH=''
 # Start MySQL with the following commands until this issue gets resolved: https://github.com/travis-ci/travis-ci/issues/6842
 sudo /usr/bin/mysqld_safe --skip-grant-tables &
 mysql -h localhost
