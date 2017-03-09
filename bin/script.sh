@@ -14,6 +14,9 @@ FEATURE_FILES=$(find $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME -
 
 echo "Number of failed tests: $FAILURES_COUNT"
 
+# upload failed test screenshots
+$HOME/stanford_travisci_scripts/bin/upload-screenshots "$HOME/lakion/*.png"
+
 # fail script.sh if behat returned at least one failure
 if [ -z "$FAILURES_COUNT" ] || [ -z "$FEATURE_FILES" ]; then
   exit 1

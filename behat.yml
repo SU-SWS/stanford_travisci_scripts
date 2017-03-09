@@ -21,6 +21,9 @@ default:
       api_driver: 'drush'
       drush:
         alias: 'local'
+    Lakion\Behat\MinkDebugExtension:
+      directory: /home/travis/lakion
+      screenshot: true
     emuse\BehatHTMLFormatter\BehatHTMLFormatterExtension:
       name: html
       renderer: Twig,Behat2

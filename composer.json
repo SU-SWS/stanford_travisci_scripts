@@ -10,6 +10,7 @@
     "psr/log":  "*",
     "emuse/behat-html-formatter": "dev-master",
     "behat/behat":  "^3.3.0"
+    "lakion/mink-debug-extension": "^1.2"
   },
   "config": {
     "bin-dir": "bin/"

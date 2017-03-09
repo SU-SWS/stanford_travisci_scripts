@@ -28,6 +28,9 @@ else
   copy_module_tests
 fi
 
+# create directory for saving test failure screenshots and logs
+mkdir $HOME/lakion
+
 # output which tests and assets have been copied over
 echo "features ready for test run"
 find $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME -type f -name "*.feature"
