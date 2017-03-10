@@ -22,8 +22,9 @@ else
   install_from_deployer
 fi
 
-# Adjust the rewrite base for the local host.
+# Adjust the rewrite base for the local host and enable clean url's.
 sed -ie "s|# RewriteBase /|RewriteBase /|" $HOME/html/.htaccess
+drush @local vset clean_url 1
 
 # Move latest module version into sites/all/stanford
 rm -rf $HOME/html/sites/all/modules/stanford/$REPOSITORY_NAME
