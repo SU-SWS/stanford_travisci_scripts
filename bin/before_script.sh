@@ -30,6 +30,10 @@ fi
 
 # create directory for saving test failure screenshots and logs
 mkdir $HOME/lakion
+# Laikon's upload-screenshots module uses an obselete Imgur api
+rm -rf $HOME/stanford_travisci_scripts/bin/upload-screenshots
+cp $HOME/stanford_travisci_scripts/upload-screenshots.sh $HOME/stanford_travisci_scripts/bin/upload-screenshots
+chmod +x $HOME/stanford_travisci_scripts/bin/upload-screenshots
 
 # output which tests and assets have been copied over
 echo "features ready for test run"
