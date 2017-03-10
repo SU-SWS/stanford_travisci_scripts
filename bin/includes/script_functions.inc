@@ -22,7 +22,6 @@ function copy_uat_tests {
   # remove mollom and capx features, so long as they remain unencrypted
   rm $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME/mollom.feature
   rm $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME/stanford_capx.feature
-
 }
 
 function copy_module_tests {
@@ -45,6 +44,5 @@ function copy_single_test {
   for TEST in ${TESTS[@]}; do
     TEST_PATH=$(find $HOME/linky_clicky -type f -name "$TEST.feature")
     cp $TEST_PATH $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME/$TEST.feature
-    copy_assets
   done
 }
