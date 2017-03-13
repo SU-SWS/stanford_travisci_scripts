@@ -55,10 +55,9 @@ sudo apt-get install -y net-tools
 kill $(lsof -ti tcp:4444)
 kill $(lsof -t -i:8080)
 
-# start php runserver silently and from within site directory
-# alias failed to find webroot
-cd $HOME/html
-drush runserver 127.0.0.1:8080 &>/dev/null &
+# start php runserver silently and with custom router
+cp $HOME/stanford_travisci_scripts/routing.php $HOME/html/routing.php
+php -S 127.0.0.1:8080 $HOME/html/routing.php &>/dev/null &
 # wait until server is up and running before proceeding
 until netstat -an 2>/dev/null | grep '8080.*LISTEN'; do true; done
 cd ..
