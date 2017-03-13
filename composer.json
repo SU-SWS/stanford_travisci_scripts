@@ -6,7 +6,7 @@
     "drupal/drupal-extension": "~3.0",
     "weavora/mink-extra-context": "dev-master",
     "drupal/drupal-driver": "^1.2.1",
-    "drush/drush": "7.1.0",
+    "drush/drush": "8.1.10",
     "psr/log":  "*",
     "emuse/behat-html-formatter": "dev-master",
     "behat/behat":  "^3.3.0",
