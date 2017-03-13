@@ -39,7 +39,7 @@ chmod +x $HOME/stanford_travisci_scripts/bin/upload-screenshots
 # output which tests and assets have been copied over
 echo "features ready for test run"
 find $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME -type f -name "*.feature"
-find $HOME/stanford_travisci_scripts/features -type f -name "*.png" -o -name "*.jpg"
+find $HOME/stanford_travisci_scripts/features -type f -name "*.png" -o -name "*.jpg" -o -name "*.txt"
 
 # start xvfb virtual display
 export DISPLAY=:99.0
