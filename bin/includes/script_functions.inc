@@ -31,11 +31,10 @@ function copy_module_tests {
 # find and copy assets when running a single test
 function copy_assets {
   mkdir $HOME/stanford_travisci_scripts/features/img
-  ASSETS_FOUND=$(find $HOME/linky_clicky -type f -name "*.png" -o -name "*.jpg")
-  echo "$ASSETS_FOUND"
-  find $HOME/linky_clicky -type f -name "*.png" -exec cp {} $HOME/stanford_travisci_scripts/features/img/ \;
-  find $HOME/linky_clicky -type f -name "*.jpg" -exec cp {} $HOME/stanford_travisci_scripts/features/img/ \;
-  find $HOME/linky_clicky -type f -name "*.txt" -exec cp {} $HOME/stanford_travisci_scripts/features/img/ \;
+  ASSET_EXTENSIONS=("*.png", "*.jpg", "*.txt", "*.mp4", "*.srt")
+  for EXTENSION in ${ASSET_EXTENSIONS[@]}; do
+    find $HOME/linky_clicky -type f -name $EXTENSION -exec cp {} $HOME/stanford_travisci_scripts/features/img/ \;
+  done
 }
 
 # loop through and copy specific tests called for by ONLY_TEST variable
