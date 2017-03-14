@@ -18,13 +18,13 @@ cp $HOME/linky_clicky/includes/extensions/drupal.extension.yml $HOME/stanford_tr
 cp $HOME/linky_clicky/includes/extensions/mink.extension.yml $HOME/stanford_travisci_scripts/includes/extensions/.
 
 # determine which tests to copy based on type of repository or ONLY_TEST variable
-copy_assets
 if [ ! -z "$ONLY_TEST" ]; then
   copy_single_test
 elif [ "$REPOSITORY_NAME" == "stanford-jumpstart-deployer" ]; then
   copy_product_tests
 elif [ "$REPOSITORY_NAME" == "Stanford-Drupal-Profile" ]; then
   copy_uat_tests
+  copy_assets
 else
   copy_module_tests
 fi
