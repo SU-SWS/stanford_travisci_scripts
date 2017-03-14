@@ -44,22 +44,54 @@ if [ ! -z "$DISABLE_MODULES" ]; then
   drush @local dis -y "$DISABLE_MODULES"
 fi
 
-# Download stanford modules if not already present in sites/all/stanford.
-for MODULE_NAME in $ENABLE_MODULES; do
-  if [[ "$MODULE_NAME" == "stanford"* ]] && [ ! -d $HOME/html/sites/all/modules/stanford/$MODULE_NAME ]; then
-    EXISTS=$(curl -X HEAD -I https://github.com/SU-SWS/$MODULE_NAME 2>/dev/null | head -n 1);
-    if [[ $EXISTS =~ .*200\ OK.* ]]; then
-      git clone https://github.com/SU-SWS/$MODULE_NAME.git $HOME/html/sites/all/modules/stanford/$MODULE_NAME
-    fi
+# Determine if a new module needs to be downloaded
+function compare_module_versions {
+  CURRENT_MODULE_VERSION=$(drush pmi --format=list --fields=version --field-labels=0 $MODULE_NAME)
+  if [ "$CURRENT_MODULE_VERSION" == "$MODULE_BRANCH" ]; then
+    echo "$MODULE_BANCH already available on site"
+  else
+    CURRENT_MODULE_PATH=$(find $HOME/html/sites/all/modules -type d -name "$MODULE_NAME")
+    rm -rf $CURRENT_MODULE_PATH
   fi
-done
+}
+
+# Find modules with specified versions
+function remove_overridden_module_versions {
+  if [[ "$MODULE" == *"-"* ]]; then
+    MODULE_NAME=$(echo $MODULE | cut -d "-" -f 1)
+    MODULE_BRANCH=$(echo $MODULE | cut -d "-" -f 2-)
+    echo "module name: $MODULE_NAME module branch: $MODULE_BRANCH"
+    compare_module_versions
+  else
+     MODULE_NAME="$MODULE"
+    # if not in use, clear out variable from previous run
+    MODULE_BRANCH=""
+  fi
+}
+
+function download_stanford_module {
+  EXISTS=$(curl -X HEAD -I https://github.com/SU-SWS/$MODULE_NAME 2>/dev/null | head -n 1);
+  if [[ $EXISTS =~ .*200\ OK.* ]]; then
+    if [ ! -z "$MODULE_BRANCH" ] && [ -z "$MODULE_PATH" ]; then MODULE_BRANCH="-b $MODULE_BRANCH"; fi
+    echo "git clone $MODULE_BRANCH https://github.com/SU-SWS/$MODULE_NAME.git $HOME/html/sites/all/modules/stanford/$MODULE_NAME"
+    git clone $MODULE_BRANCH https://github.com/SU-SWS/$MODULE_NAME.git $HOME/html/sites/all/modules/stanford/$MODULE_NAME
+  fi
+}
+
+if [ ! -z "$ENABLE_MODULES" ]; then
+  for MODULE in $ENABLE_MODULES; do
+    remove_overridden_module_versions
+    if [[ "$MODULE_NAME" == "stanford"* ]]; then
+      download_stanford_module
+    else
+      drush @local en -y $MODULE
+    fi
+  done
+fi
 
 # Enable modules and submodules if specified.
 if [[ ! "$REPOSITORY_NAME" =~ "Stanford-Drupal-Profile"|"stanford-jumpstart-deployer" ]]; then
   drush @local en -y $REPOSITORY_NAME
-fi
-if [ ! -z "$ENABLE_MODULES" ]; then
-  drush @local en -y $ENABLE_MODULES
 fi
 
 # Ensure that all features are in the state that they should be.

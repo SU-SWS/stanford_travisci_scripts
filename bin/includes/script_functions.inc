@@ -36,6 +36,8 @@ function copy_assets {
     find $HOME/linky_clicky -type f -name "$EXTENSION"
     find $HOME/linky_clicky -type f -name "$EXTENSION" -exec cp {} $HOME/stanford_travisci_scripts/img/ \;
   done
+  # find not locating filefield_path.txt file
+  cp $HOME/linky_clicky/sites/uat/img/filefield_path.txt $HOME/stanford_travisci_scripts/img/
 }
 
 # loop through and copy specific tests called for by ONLY_TEST variable

@@ -19,9 +19,10 @@
 # Enter as a space separated string, modules and submodules that you
 # would like to enable after the installation profile has run. Useful
 # for adding additional items. You do not need to include the module
-# being tested.
+# being tested. You can include a specific module version or stanford
+# module branch name.
 # Example:
-# stanford_gallery nobots
+# stanford_gallery-7.x-2.x nobots-7.x-1.x-dev stanford_page
 #
 # DISABLE_MODULES:
 # Enter as a space separated string, modules you would like disabled after the
