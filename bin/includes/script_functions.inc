@@ -31,7 +31,7 @@ function copy_module_tests {
 # find and copy assets when running a single test
 function copy_assets {
   mkdir $HOME/stanford_travisci_scripts/img
-  ASSET_EXTENSIONS=("*.png", "*.jpg", "*.txt", "*.mp4", "*.srt")
+  declare -A ASSET_EXTENSIONS=("*.png", "*.jpg", "*.txt", "*.mp4", "*.srt")
   for EXTENSION in ${ASSET_EXTENSIONS[@]}; do
     find $HOME/linky_clicky -type f -name "$EXTENSION" -exec cp {} $HOME/stanford_travisci_scripts/img/ \;
   done
