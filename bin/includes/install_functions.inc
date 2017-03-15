@@ -71,7 +71,6 @@ function check_for_module_version {
     find_old_module_version
   else
     MODULE_NAME=$MODULE
-    MODULE_BRANCH=""
   fi
 }
 

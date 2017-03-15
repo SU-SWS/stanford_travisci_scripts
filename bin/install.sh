@@ -47,6 +47,11 @@ fi
 # Download and enable specified module and module versions
 if [ ! -z "$ENABLE_MODULES" ]; then
   for MODULE in $ENABLE_MODULES; do
+    # clear out variable values from previous module
+    MODULE_NAME=""
+    BRANCH_NAME=""
+    CURRENT_MODULE_PATH=""
+    CURRENT_MODULE_VERSION=""
     echo $MODULE
     check_for_module_version
     install_new_module_version
