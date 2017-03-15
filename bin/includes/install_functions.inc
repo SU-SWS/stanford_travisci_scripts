@@ -45,3 +45,52 @@ function update_test_branch {
     DEPLOYER_BRANCH="$TRAVIS_PULL_REQUEST_BRANCH"
   fi
 }
+
+# Determine if a new module needs to be downloaded
+function remove_old_module_version {
+  if [[ "$CURRENT_MODULE_VERSION" != "$MODULE_BRANCH" ]] && [ ! -z "$CURRENT_MODULE_VERSION" ]; then
+    rm -rf $CURRENT_MODULE_PATH
+  fi
+}
+
+function find_old_module_version {
+  CURRENT_MODULE_PATH=$(find $HOME/html/sites/all/modules -type d -name "$MODULE_NAME")
+  if [ ! -z "$CURRENT_MODULE_PATH" ]; then
+    CURRENT_MODULE_VERSION=$(drush @local pmi --format=list --fields=version --field-labels=0 $MODULE_NAME)
+    echo "module version: $CURRENT_MODULE_VERSION"
+    remove_old_module_version
+  fi
+}
+
+# Find modules with specified versions
+function check_for_module_version {
+  if [[ "$MODULE" == *"-"* ]]; then
+    MODULE_NAME=$(echo $MODULE | cut -d "-" -f 1)
+    MODULE_BRANCH=$(echo $MODULE | cut -d "-" -f 2-)
+    echo "module name: $MODULE_NAME module branch: $MODULE_BRANCH"
+    find_old_module_version
+  else
+    MODULE_NAME=$MODULE
+    MODULE_BRANCH=""
+  fi
+}
+
+function download_stanford_module {
+  EXISTS=$(curl -X HEAD -I https://github.com/SU-SWS/$MODULE_NAME 2>/dev/null | head -n 1);
+  if [[ $EXISTS =~ .*200\ OK.* ]]; then
+    if [ ! -z "$MODULE_BRANCH" ] && [ -z "$MODULE_PATH" ]; then MODULE_BRANCH="-b $MODULE_BRANCH"; fi
+    echo "git clone $MODULE_BRANCH https://github.com/SU-SWS/$MODULE_NAME.git $HOME/html/sites/all/modules/stanford/$MODULE_NAME"
+    git clone $MODULE_BRANCH https://github.com/SU-SWS/$MODULE_NAME.git $HOME/html/sites/all/modules/stanford/$MODULE_NAME
+  fi
+}
+
+function install_new_module_version {
+  # module directory should not be there if updating the module version
+  if [[ "$MODULE_NAME" == "stanford"* ]] && [ ! -d $HOME/html/sites/all/modules/stanford/$MODULE_NAME ]; then
+    download_stanford_module
+  else
+    drush @local dl -y $MODULE
+  fi
+  drush @local en -y $MODULE_NAME
+}
+
