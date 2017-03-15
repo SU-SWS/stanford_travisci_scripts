@@ -44,6 +44,7 @@ if [ ! -z "$DISABLE_MODULES" ]; then
   drush @local dis -y "$DISABLE_MODULES"
 fi
 
+# Download and enable specified module and module versions
 if [ ! -z "$ENABLE_MODULES" ]; then
   for MODULE in $ENABLE_MODULES; do
     echo $MODULE
