@@ -45,26 +45,30 @@ if [ ! -z "$DISABLE_MODULES" ]; then
 fi
 
 # Determine if a new module needs to be downloaded
-function compare_module_versions {
-  CURRENT_MODULE_VERSION=$(drush pmi --format=list --fields=version --field-labels=0 $MODULE_NAME)
-  if [ "$CURRENT_MODULE_VERSION" == "$MODULE_BRANCH" ]; then
-    echo "$MODULE_BANCH already available on site"
-  else
-    CURRENT_MODULE_PATH=$(find $HOME/html/sites/all/modules -type d -name "$MODULE_NAME")
+function remove_old_module_version {
+  if [[ "$CURRENT_MODULE_VERSION" != "$MODULE_BRANCH" ]] && [ ! -z "$CURRENT_MODULE_VERSION" ]; then
     rm -rf $CURRENT_MODULE_PATH
   fi
 }
 
+function find_old_module_version {
+  CURRENT_MODULE_PATH=$(find $HOME/html/sites/all/modules -type d -name "$MODULE_NAME")
+  if [ ! -z "$CURRENT_MODULE_PATH" ]; then
+    CURRENT_MODULE_VERSION=$(drush @local pmi --format=list --fields=version --field-labels=0 $MODULE_NAME)
+    echo "module version: $CURRENT_MODULE_VERSION"
+    remove_old_module_version
+  fi
+}
+
 # Find modules with specified versions
-function remove_overridden_module_versions {
+function check_for_module_version {
   if [[ "$MODULE" == *"-"* ]]; then
     MODULE_NAME=$(echo $MODULE | cut -d "-" -f 1)
     MODULE_BRANCH=$(echo $MODULE | cut -d "-" -f 2-)
     echo "module name: $MODULE_NAME module branch: $MODULE_BRANCH"
-    compare_module_versions
+    find_old_module_version
   else
-     MODULE_NAME="$MODULE"
-    # if not in use, clear out variable from previous run
+    MODULE_NAME=$MODULE
     MODULE_BRANCH=""
   fi
 }
@@ -78,14 +82,20 @@ function download_stanford_module {
   fi
 }
 
+function install_new_module_version {
+  if [[ "$MODULE_NAME" == "stanford"* ]]; then
+    download_stanford_module
+  else
+    drush @local dl -y $MODULE
+  fi
+  drush @local en -y $MODULE_NAME
+}
+
 if [ ! -z "$ENABLE_MODULES" ]; then
   for MODULE in $ENABLE_MODULES; do
-    remove_overridden_module_versions
-    if [[ "$MODULE_NAME" == "stanford"* ]]; then
-      download_stanford_module
-    else
-      drush @local en -y $MODULE
-    fi
+    echo $MODULE
+    check_for_module_version
+    install_new_module_version
   done
 fi
 
