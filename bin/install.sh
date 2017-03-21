@@ -44,22 +44,23 @@ if [ ! -z "$DISABLE_MODULES" ]; then
   drush @local dis -y "$DISABLE_MODULES"
 fi
 
-# Download stanford modules if not already present in sites/all/stanford.
-for MODULE_NAME in $ENABLE_MODULES; do
-  if [[ "$MODULE_NAME" == "stanford"* ]] && [ ! -d $HOME/html/sites/all/modules/stanford/$MODULE_NAME ]; then
-    EXISTS=$(curl -X HEAD -I https://github.com/SU-SWS/$MODULE_NAME 2>/dev/null | head -n 1);
-    if [[ $EXISTS =~ .*200\ OK.* ]]; then
-      git clone https://github.com/SU-SWS/$MODULE_NAME.git $HOME/html/sites/all/modules/stanford/$MODULE_NAME
-    fi
-  fi
-done
+# Download and enable specified module and module versions
+if [ ! -z "$ENABLE_MODULES" ]; then
+  for MODULE in $ENABLE_MODULES; do
+    # clear out variable values from previous module
+    MODULE_NAME=""
+    BRANCH_NAME=""
+    CURRENT_MODULE_PATH=""
+    CURRENT_MODULE_VERSION=""
+    echo $MODULE
+    check_for_module_version
+    install_new_module_version
+  done
+fi
 
 # Enable modules and submodules if specified.
 if [[ ! "$REPOSITORY_NAME" =~ "Stanford-Drupal-Profile"|"stanford-jumpstart-deployer" ]]; then
   drush @local en -y $REPOSITORY_NAME
-fi
-if [ ! -z "$ENABLE_MODULES" ]; then
-  drush @local en -y $ENABLE_MODULES
 fi
 
 # Ensure that all features are in the state that they should be.
