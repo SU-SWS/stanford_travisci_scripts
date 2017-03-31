@@ -17,6 +17,7 @@ cat $HOME/.drush/aliases.drushrc.php
 git clone --depth 1 https://github.com/SU-SWS/j8 $HOME/html
 cd j8/
 composer install --prefer-source
+ln -s $HOME/j8/web $HOME/html
 
 # Place the base path in the settings.php file because it has a non default port.
 chmod 0777 $HOME/html/sites/default/settings.php
