@@ -13,19 +13,19 @@ function copy_product_tests {
   ACRONYM="${PRODUCTS_LIST[$PRODUCT_NAME]}"
   if [ ! -z "$ACRONYM" ]; then
     echo "cp -r $HOME/linky_clicky/products/$ACRONYM/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME"
-    cp -r $HOME/linky_clicky/products/$ACRONYM/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
+    cp -rL $HOME/linky_clicky/products/$ACRONYM/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
   fi
 }
 
 function copy_uat_tests {
-  cp -r $HOME/linky_clicky/sites/uat/features/high-value $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
+  cp -rL $HOME/linky_clicky/sites/uat/features/high-value $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
   # remove mollom and capx features, so long as they remain unencrypted
   rm $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME/mollom.feature
   rm $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME/stanford_capx.feature
 }
 
 function copy_module_tests {
-  cp -r $HOME/linky_clicky/includes/features/SU-SWS/$REPOSITORY_NAME $HOME/stanford_travisci_scripts/features/.
+  cp -rL $HOME/linky_clicky/includes/features/SU-SWS/$REPOSITORY_NAME $HOME/stanford_travisci_scripts/features/.
 }
 
 # find and copy assets when running uat tests
