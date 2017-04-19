@@ -10,7 +10,7 @@ Maintainers: [sherakama](https://github.com/sherakama), [kbrownell](https://gith
 
 We chose to keep our .travis.yml file as minimal as possible, so that we can more easily maintain and update this code across a number of different repositories.
 
-Sites are built and tests are run by scripts in the bin directory.  These scripts assume that the Behat test name will match the module name it tests.  For example, if the module is stanford_bean_types, then before_script.sh will assume the Behat test name will be stanford_bean_types.feature.  Our full suite of tests can be found in the [Linky Click](https://github.com/SU-SWS/linky_clicky) repository.
+Sites are built and tests are run by scripts in the bin directory.  These scripts assume that the Behat test name will match the module name it tests.  For example, if the module is stanford_bean_types, then before_script.sh will assume the Behat test name will be stanford_bean_types.feature.  Our full suite of tests can be found in the [Linky Clicky](https://github.com/SU-SWS/linky_clicky) repository.
 
 Installation
 ---
@@ -82,13 +82,21 @@ Assets
 
 **bin/before_install.sh:** Script that downloads required packages for building sites and running tests, such as drush, behat, selenium, etc.
 
-**bin/install.sh:** Script that builds a self-service, department site based on our [Stanford Drupal Profile](https://github.com/SU-SWS/Stanford-Drupal-Profile) make files.  It also starts the webserver and webdrivers we'll be using to run behat tests in a display-less environment.
+**bin/install.sh:** Script that builds a self-service or product site based on [Stanford Drupal Profile](https://github.com/SU-SWS/Stanford-Drupal-Profile) or [stanford-jumpstart-deployer](https://github.com/SU-SWS/stanford-jumpstart-deployer) make files.  It also starts the webserver and webdrivers we'll be using to run behat tests in a display-less environment.
 
 **bin/before_script.sh:** Script that downloads our test suite [Linky Clicky](https://github.com/SU-SWS/linky_clicky.git) and copies over tests for the feature we are testing.  It also starts xvfb, which we use to fake a display.
 
 **composer.json:** Contains the packages we need to build and test sites, such as drush, behat, selenium, etc.
 
 **features/:** This directory, and more importantly, the contents of features/bootstrap include the custom step definitions which we use to run our behat tests.
+
+**.netrc:** We use this file to store GitHub access tokens, so that we do not have to include them in clone requests to private repositories.
+
+**.travis.default.yml:** This is an example .travis.yml file that can be added to new repositories.  A modification of the file, for profiles, can be found in the [Stanford Drupal Profile](https://github.com/SU-SWS/Stanford-Drupal-Profile) or [stanford-jumpstart-deployer](https://github.com/SU-SWS/stanford-jumpstart-deployer) repositories.  These .yml files include a matrix of variables to build all product variations.
+
+**routing.php:** PHP runserver was not properly parsing addresses with `.` in them.  Behat tests that look for uploaded assets, often include addresses with periods, ie. file extensions.
+
+**upload-screenshots.sh:** Re-creating locally a failed build and test run took a really long time.  So we decided to upload screenshots of failed tests, only imgur's API has changed since Laikon's last release.
 
 Contribution / Collaboration
 ---
