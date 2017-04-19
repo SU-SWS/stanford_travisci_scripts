@@ -1,4 +1,4 @@
-#[Stanford TravisCI Scripts](https://github.com/SU-SWS/stanford_travisci_scripts)
+# [Stanford TravisCI Scripts](https://github.com/SU-SWS/stanford_travisci_scripts)
 Repository of scripts used by Travis CI to build sites and test feature modules.
 ##### Version: 7.x-1.0
 
