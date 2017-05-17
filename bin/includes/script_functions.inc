@@ -15,6 +15,7 @@ function copy_product_tests {
     echo "cp -r $HOME/linky_clicky/products/$ACRONYM/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME"
     cp -rL $HOME/linky_clicky/products/$ACRONYM/features $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME
   fi
+  rm -rf $HOME/stanford_travisci_scripts/features/stanford_capx/*
 }
 
 function copy_uat_tests {
