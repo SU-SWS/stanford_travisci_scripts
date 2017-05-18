@@ -6,7 +6,14 @@ export REPOSITORY_NAME=$(basename $TRAVIS_BUILD_DIR)
 
 # run through all tests in features directory
 cd $HOME/stanford_travisci_scripts
-bin/behat -p default -s dev --tags "@$BEHAT_TAG&&~@sites&&~@webauth&&~@email" features
+
+if [[ -z "$BEHAT_TAG" ]]; then
+  TAGS='~@sites&&~@webauth&&~@email'
+else
+  TAGS="@$BEHAT_TAG&&~@sites&&~@webauth&&~@email"
+fi
+
+bin/behat -p default -s dev --tags "$TAGS" features
 
 # grap the number of failures from behat's html output summary report
 FAILURES_COUNT=$(cat behat_results/index.html | grep 'scenarios failed of' | sed -r 's/^([^.]+).*$/\1/; s/^[^0-9]*([0-9]+).*$/\1/')
