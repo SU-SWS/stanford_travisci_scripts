@@ -36,6 +36,13 @@
 # Example:
 # field_collection
 #
+# BEHAT_TAGS:
+# By default, we exclude tests requiring email and webauth. This variable gives
+# users the option of further limiting tests to `@deploy` only, for example, which
+# is useful when running a large number of product related tests.
+# Example:
+# deploy
+#
 # DEPLOYER_BRANCH:
 # Leave blank to use the default stanford-jumpstart-deployer branch.
 # Example:
