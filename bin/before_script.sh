@@ -69,5 +69,22 @@ cd ..
 wget http://selenium-release.storage.googleapis.com/2.47/selenium-server-standalone-2.47.1.jar
 java -jar selenium-server-standalone-2.47.1.jar -p 4444 &
 
+# Installing Chrome 59.0.3071.104
+sudo apt-get install libxss1 libappindicator1 libindicator7 vim wget -y
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+# Unpackaging chrome returns an error because it is missing dependencies, which is not a problem,
+# We install them a moment later.  So adding || true to be sure this behavior does not quite the script.
+sudo dpkg -i google-chrome-stable_current_amd64.deb || true
+sudo apt-get -f install -y
+google-chrome --version
+
+# Installing Chromedriver
+wget https://chromedriver.storage.googleapis.com/2.30/chromedriver_linux64.zip
+unzip chromedriver_linux64.zip
+sudo mv -f chromedriver /usr/local/share/chromedriver
+sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+sudo ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
+
 # wait until selenium-server is up and running before proceeding
 until netstat -an 2>/dev/null | grep '4444.*LISTEN'; do true; done

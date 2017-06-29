@@ -11,9 +11,13 @@ default:
     Behat\MinkExtension:
       goutte: ~
       javascript_session: selenium2
-      browser_name: firefox
+      browser_name: googlechrome
       selenium2:
-        browser: firefox
+        browser: chrome
+        capabilities:
+          chrome:
+            switches:
+              - "--headless"
       base_url: http://127.0.0.1:8080
       files_path: "."
     Drupal\DrupalExtension:
