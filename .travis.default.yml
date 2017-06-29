@@ -109,3 +109,7 @@ before_script:
 script:
   # make sure shell can find drush and run behat tests here, so Travis CI reports accurate results
   - $HOME/stanford_travisci_scripts/bin/script.sh
+
+# No emails by default.
+notifications:
+  email: false
