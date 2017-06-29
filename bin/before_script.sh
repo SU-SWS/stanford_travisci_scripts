@@ -67,7 +67,7 @@ cd ..
 
 # download recommended version of selenium-server, start, silence, and background process
 wget http://selenium-release.storage.googleapis.com/2.47/selenium-server-standalone-2.47.1.jar
-java -jar selenium-server-standalone-2.47.1.jar -p 4444 &>/dev/null &
+java -jar selenium-server-standalone-2.47.1.jar -p 4444 &
 
 # wait until selenium-server is up and running before proceeding
 until netstat -an 2>/dev/null | grep '4444.*LISTEN'; do true; done
