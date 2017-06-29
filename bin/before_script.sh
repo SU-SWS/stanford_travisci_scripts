@@ -60,7 +60,7 @@ kill $(lsof -t -i:8080)
 # must be started in the site's root directory
 cp $HOME/stanford_travisci_scripts/routing.php $HOME/html/routing.php
 cd $HOME/html
-php -S 127.0.0.1:8080 $HOME/html/routing.php &>/dev/null &
+php -S 127.0.0.1:8080 $HOME/html/routing.php &
 # wait until server is up and running before proceeding
 until netstat -an 2>/dev/null | grep '8080.*LISTEN'; do true; done
 cd ..
