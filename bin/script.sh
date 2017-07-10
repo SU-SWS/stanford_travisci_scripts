@@ -13,7 +13,7 @@ else
   TAGS="@$BEHAT_TAG&&~@sites&&~@webauth&&~@email"
 fi
 
-bin/behat -p default -s dev --tags "$TAGS" features
+bin/behat -p default -s dev --tags "$TAGS" --colors features
 
 
 # grap the number of failures from behat's html output summary report
