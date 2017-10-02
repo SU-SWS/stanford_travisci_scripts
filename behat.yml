@@ -9,6 +9,7 @@ imports:
 default:
   extensions:
     Behat\MinkExtension:
+      javascript_session: selenium2
       goutte:
         guzzle_parameters:
           verify: false
