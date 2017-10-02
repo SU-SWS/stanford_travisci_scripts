@@ -9,7 +9,6 @@ imports:
 default:
   extensions:
     Behat\MinkExtension:
-      javascript_session: selenium2
       goutte:
         guzzle_parameters:
           verify: false
@@ -21,17 +20,14 @@ default:
               chrome:
                 switches:
                   - "--headless"
-                  - "--disable-gpu"
       base_url: http://127.0.0.1:8080
       files_path: "."
     Drupal\DrupalExtension:
-      blackbox: ~
       api_driver: 'drush'
+      drupal:
+        drupal_root: /home/travis/html
       drush:
         alias: 'local'
-    Lakion\Behat\MinkDebugExtension:
-      directory: /home/travis/lakion
-      screenshot: true
     emuse\BehatHTMLFormatter\BehatHTMLFormatterExtension:
       name: html
       renderer: Twig,Behat2
