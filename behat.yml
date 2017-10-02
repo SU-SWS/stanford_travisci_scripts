@@ -10,10 +10,15 @@ default:
   extensions:
     Behat\MinkExtension:
       goutte: ~
-      javascript_session: selenium2
-      browser_name: firefox
+      default_session: selenium2
       selenium2:
-        browser: firefox
+        browser: chrome
+        wd_host: http://127.0.0.1:4444/wd/hub
+        capabilities:
+          chrome:
+            switches:
+              - "--headless"
+              - "--disable-gpu"
       base_url: http://127.0.0.1:8080
       files_path: "."
     Drupal\DrupalExtension:
