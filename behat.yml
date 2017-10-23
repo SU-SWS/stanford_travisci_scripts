@@ -12,16 +12,17 @@ default:
       goutte:
         guzzle_parameters:
           verify: false
-      sessions:
-        default:
-          selenium2:
-            browser: chrome
-            capabilities:
-              chrome:
-                switches:
-                  - "--headless"
+      javascript_session: selenium2
+      selenium2:
+        browser: chrome
+        capabilities:
+          chrome:
+            switches:
+              - "--headless"
       base_url: http://127.0.0.1:8080
+      files_path: "."
     Drupal\DrupalExtension:
+      blackbox: ~
       api_driver: 'drush'
       drush:
         alias: 'local'
