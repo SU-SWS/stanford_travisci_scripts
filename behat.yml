@@ -23,8 +23,6 @@ default:
       base_url: http://127.0.0.1:8080
     Drupal\DrupalExtension:
       api_driver: 'drush'
-      drupal:
-        drupal_root: /home/travis/html
       drush:
         alias: 'local'
     emuse\BehatHTMLFormatter\BehatHTMLFormatterExtension:
