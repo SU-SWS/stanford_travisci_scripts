@@ -13,8 +13,9 @@ default:
         guzzle_parameters:
           verify: false
       javascript_session: selenium2
+      browser_name: firefox
       selenium2:
-        browser: chrome
+        browser: firefox
       base_url: http://127.0.0.1:8080
       files_path: "."
     Drupal\DrupalExtension:
