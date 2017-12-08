@@ -15,7 +15,7 @@ mkdir $HOME/stanford_travisci_scripts/includes/extensions
 cp $HOME/linky_clicky/includes/bootstrap/* $HOME/stanford_travisci_scripts/features/bootstrap/.
 cp $HOME/linky_clicky/includes/config/default.yml $HOME/stanford_travisci_scripts/includes/config/.
 cp $HOME/linky_clicky/includes/extensions/drupal.extension.yml $HOME/stanford_travisci_scripts/includes/extensions/.
-cp $HOME/linky_clicky/includes/extensions/mink.extension.yml $HOME/stanford_travisci_scripts/includes/extensions/.
+cp $HOME/stanford_travis_scripts/mink.extension.yml $HOME/stanford_travisci_scripts/includes/extensions/.
 
 # determine which tests to copy based on type of repository or ONLY_TEST variable
 copy_assets

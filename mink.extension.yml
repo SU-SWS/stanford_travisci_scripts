@@ -1,0 +1,10 @@
+default:
+  extensions:
+    Behat\MinkExtension:
+      goutte: ~
+      javascript_session: selenium2
+      browser_name: googlechrome
+      selenium2:
+         browser: chrome
+      base_url: http://sites.stanford.edu/example
+      files_path: "."
