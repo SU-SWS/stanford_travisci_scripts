@@ -13,10 +13,6 @@ else
   TAGS="@$BEHAT_TAG&&~@sites&&~@webauth&&~@email"
 fi
 
-pwd
-ls features
-ls features/Stanford-Drupal-Profile
-
 bin/behat -p default -s dev --tags "$TAGS" --colors features -v
 
 # grap the number of failures from behat's html output summary report
