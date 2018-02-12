@@ -70,7 +70,7 @@ sudo apt-get install libxss1 libappindicator1 libindicator7 vim wget -y
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
 # Unpackaging chrome returns an error because it is missing dependencies, which is not a problem,
-# We install them a moment later.  So adding || true to be sure this behavior does not quite the script.
+# We install them a moment later.  So adding || true to be sure this behavior does not quit the script.
 sudo dpkg -i google-chrome-stable_current_amd64.deb || true
 sudo apt-get -f install -y
 google-chrome --version
