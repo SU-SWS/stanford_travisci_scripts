@@ -15,7 +15,6 @@ fi
 
 bin/behat -p default -s dev --tags "$TAGS" --colors features -v
 
-
 # grap the number of failures from behat's html output summary report
 FAILURES_COUNT=$(cat behat_results/index.html | grep 'scenarios failed of' | sed -r 's/^([^.]+).*$/\1/; s/^[^0-9]*([0-9]+).*$/\1/')
 FEATURE_FILES=$(find $HOME/stanford_travisci_scripts/features/$REPOSITORY_NAME -type f -name "*.feature")

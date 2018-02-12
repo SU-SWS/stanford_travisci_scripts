@@ -15,7 +15,7 @@ mkdir $HOME/stanford_travisci_scripts/includes/extensions
 cp $HOME/linky_clicky/includes/bootstrap/* $HOME/stanford_travisci_scripts/features/bootstrap/.
 cp $HOME/linky_clicky/includes/config/default.yml $HOME/stanford_travisci_scripts/includes/config/.
 cp $HOME/linky_clicky/includes/extensions/drupal.extension.yml $HOME/stanford_travisci_scripts/includes/extensions/.
-cp $HOME/linky_clicky/includes/extensions/mink.extension.yml $HOME/stanford_travisci_scripts/includes/extensions/.
+cp $HOME/stanford_travisci_scripts/mink.extension.yml $HOME/stanford_travisci_scripts/includes/extensions/.
 
 # determine which tests to copy based on type of repository or ONLY_TEST variable
 copy_assets
@@ -64,6 +64,23 @@ php -S 127.0.0.1:8080 $HOME/html/routing.php &>/dev/null &
 # wait until server is up and running before proceeding
 until netstat -an 2>/dev/null | grep '8080.*LISTEN'; do true; done
 cd ..
+
+# download and install Chrome
+sudo apt-get install libxss1 libappindicator1 libindicator7 vim wget -y
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+# Unpackaging chrome returns an error because it is missing dependencies, which is not a problem,
+# We install them a moment later.  So adding || true to be sure this behavior does not quit the script.
+sudo dpkg -i google-chrome-stable_current_amd64.deb || true
+sudo apt-get -f install -y
+google-chrome --version
+
+status "Installing Chromedriver"
+wget https://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip
+unzip chromedriver_linux64.zip
+sudo mv -f chromedriver /usr/local/share/chromedriver
+sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+sudo ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
 
 # download recommended version of selenium-server, start, silence, and background process
 wget http://selenium-release.storage.googleapis.com/2.47/selenium-server-standalone-2.47.1.jar

@@ -9,21 +9,27 @@ imports:
 default:
   extensions:
     Behat\MinkExtension:
-      goutte: ~
-      javascript_session: selenium2
-      browser_name: firefox
-      selenium2:
-        browser: firefox
       base_url: http://127.0.0.1:8080
-      files_path: "."
+      browser_name: googlechrome
+      javascript_session: selenium2
+      sessions:
+        default:
+          selenium2:
+            wd_host: http://127.0.0.1:4444/wd/hub
+            browser: chrome
+            capabilities:
+              chrome:
+                switches:
+                  - "--headless"
+                  - "--disable-gpu"
+      goutte:
+        guzzle_parameters:
+          verify: false
     Drupal\DrupalExtension:
       blackbox: ~
       api_driver: 'drush'
       drush:
         alias: 'local'
-    Lakion\Behat\MinkDebugExtension:
-      directory: /home/travis/lakion
-      screenshot: true
     emuse\BehatHTMLFormatter\BehatHTMLFormatterExtension:
       name: html
       renderer: Twig,Behat2
